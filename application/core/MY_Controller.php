@@ -12,9 +12,9 @@ class MY_controller extends CI_Controller{
  }
 
  public function Plantilla($view, $data = array()){
-        $this->load->view("catalogo/head");
+        
         $this->load->view($view,$data);
-        $this->load->view("catalogo/footer");
+        
  }
 
 }
