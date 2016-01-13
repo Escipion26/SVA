@@ -11,18 +11,10 @@ class MY_controller extends CI_Controller{
         parent::__construct();
  }
 
- public function Plantilla1($view, $data = array()){
+ public function Plantilla($view, $data = array()){
      
-     $this->load->view("plantilla/script");
+     
      $this->load->view("plantilla/header");
-     $this->load->view($view,$data);
-     $this->load->view("plantilla/footer");
-        
- }
- 
- public function vista($view, $data = array()){
-     
-     $this->load->view("plantilla/script");
      $this->load->view($view,$data);
      $this->load->view("plantilla/footer");
         

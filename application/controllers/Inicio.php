@@ -5,7 +5,7 @@ class Inicio extends MY_controller {
     
     public function index(){
         
-        $this->Plantilla1("inicio",array());
+        $this->Plantilla("inicio",array());
         
     }
 }

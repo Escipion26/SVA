@@ -5,7 +5,7 @@ class Productos extends MY_controller {
     
     public function index(){
         
-        $this->vista("producto",array());
+        $this->Plantilla("producto",array());
         
     }
 }
