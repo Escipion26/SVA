@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$server = 'http://'.$_SERVER['SERVER_NAME']."/SVA";
+$server = 'http://'.$_SERVER['SERVER_NAME'].":8080/SVA";
 $config['base_url'] = $server;
 
 /*
