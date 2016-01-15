@@ -12,6 +12,7 @@ class Inicio extends MY_controller {
     public function index() {
 
         $inicio['slide'] = $this->carga_slide();
+        $inicio['recomendado'] = $this->carga_recomendado();
         $this->Plantilla("inicio", $inicio);
     }
 
@@ -56,25 +57,42 @@ class Inicio extends MY_controller {
     }
     
     
-    public function carga_recomendado(){ //funcion que rutas de imagenes para recomendados
+    public function carga_recomendado(){ //funcion que trae rutas de imagenes para recomendados inicio
         
-        $recomendado1_inicio = "";
-        $recomendado1_final = "";
-        $recomendado2 = "";
-        $recomendado_final = "";
+        $recomendado1_inicio = "<div class='item active'>";
+        $recomendado2_inicio = "<div class='item'>";
+        $tag_final = "</div>";
+        $cadena ="";
+        
         $menu = $this->slide_model->traer_contenido_recomendado(2);
         $cont = 0;
         
         if($menu){
             foreach ($menu as $foto) {
-                
-                
-                
-                
+                if($cont==0){ //las primeras 3 fotos con class active para que funcione
+                    $cadena .= $recomendado1_inicio;
+                }elseif($cont == 3){ // pas proximas sin class active
+                    $cadena .= $tag_final;
+                    $cadena .= $recomendado2_inicio;
+                }
+                $cadena .="<div class = 'col-sm-4'>";
+                    $cadena .="<div class = 'product-image-wrapper'>";
+                        $cadena .="<div class = 'single-products'>";
+                            $cadena .="<div class = 'productinfo text-center'>";
+                                $cadena .="<img src = '".$foto->ruta."' alt = '' />";
+                                $cadena .="<h2>'$".$foto->precio_venta."'</h2>";
+                                $cadena .="<p>'".$foto->descripcion."'</p>";
+                                $cadena .="<a href = '#' class = 'btn btn-default add-to-cart'><i class = 'fa fa-shopping-cart'></i>Agregar a carrito</a>";
+                            $cadena .="</div>";
+                        $cadena .="</div>";
+                    $cadena .="</div>";
+                $cadena .="</div>";
+                $cont = $cont + 1;
             }
+            $cadena .= $tag_final;
         }
         
-        
+        return $cadena;
     }
 
 }

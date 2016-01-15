@@ -22,7 +22,7 @@ class Slide_model extends CI_Model {
    
    public function traer_contenido_recomendado($tipo){
        
-       $query = $this->db->query("select ;");
+       $query = $this->db->query('select tp.prod_precio_venta as precio_venta, tp.prod_descripcion as descripcion, tp.idtab_productos as id_producto, ti.dis_ruta as ruta from tab_productos tp join tab_dis_img ti on tp.idtab_productos = ti.dis_id_producto where ti.dis_lugar = "'.$tipo.'"');
        
        if($query){
            return $query->result();
