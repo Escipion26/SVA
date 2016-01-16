@@ -28,4 +28,19 @@ class Slide_model extends CI_Model {
            return $query->result();
        }
    }
+   
+   public function traer_categorias($valor){
+       $query;
+       
+       if($valor == 1){
+           $query = $this->db->get('tab_categorias');
+       }elseif($valor == 2){
+           $query = $this->db->get('tab_sub_categorias');
+       }
+       
+       if($query){
+           return $query->result();
+       }
+       
+   }
 }

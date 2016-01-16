@@ -13,6 +13,7 @@ class Inicio extends MY_controller {
 
         $inicio['slide'] = $this->carga_slide();
         $inicio['recomendado'] = $this->carga_recomendado();
+        $inicio['categorias'] = $this->carga_menu_categorias();
         $this->Plantilla("inicio", $inicio);
     }
 
@@ -93,6 +94,46 @@ class Inicio extends MY_controller {
         }
         
         return $cadena;
+    }
+    
+    public function carga_menu_categorias(){
+        
+        $categorias = $this->slide_model->traer_categorias(1);
+        $subcategorias = $this->slide_model->traer_categorias(2);
+        $menu = "";
+        if($categorias && $subcategorias){
+            
+            foreach ($categorias as $row){
+                $menu .="<div class = 'panel panel-defaul'>";
+                $menu .="<div class = 'panel-heading'>";
+                $menu .="<h4 class = 'panel-title'>";
+                $menu .="<a data-toggle = 'collapse' data-parent = '#accordian' href = '#".$row->cat_nombre_categoria."'>";
+                $menu .="<span class = 'badge pull-right'><i class = 'fa fa-plus'></i></span>";
+                $menu .=$row->cat_nombre_categoria;
+                $menu .="</a>";
+                $menu .="</h4>";
+                $menu .="</div>";
+                $menu .="<div id = '".$row->cat_nombre_categoria."' class = 'panel-collapse collapse'>";
+                $menu .="<div class ='panel-body'>";
+                $menu .="<ul>";
+                
+                foreach ($subcategorias as $value) {
+                    if($row->idtab_categorias == $value->tab_categorias_idtab_categorias){
+                        $menu .="<li><a href='#'>'".$value->sub_nombre."'</a></li>";
+                    }
+                }
+                
+                $menu .="</ul>";
+                $menu .="</div>";
+                $menu .="</div>";
+                $menu .="</div>";
+            }
+            
+        }
+        
+        return $menu;
+        
+        
     }
 
 }
