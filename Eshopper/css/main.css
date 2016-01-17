@@ -1428,7 +1428,7 @@ h2.title {
 #form {
   display: block;
   margin-bottom: 185px;
-  margin-top: 185px;
+  margin-top: 100px;
   overflow: hidden;
 }
 
@@ -1480,7 +1480,7 @@ h2.title {
 }
 
 .login-form form button, .signup-form form button {
-  background: #FE980F;
+  background: #0083C9;
   border: medium none;
   border-radius: 0;
   color: #FFFFFF;

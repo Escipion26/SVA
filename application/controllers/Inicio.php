@@ -29,7 +29,7 @@ class Inicio extends MY_controller {
                     $slide .="<div class='item active'>";
                     $slide .="<div class='col-sm-6'>";
                     $slide .="<h1><span>E</span>-SHOPPER</h1>";
-                    $slide .="<h2>'".$foto->dis_titulo."'</h2>";
+                    $slide .="<h2>".$foto->dis_titulo."</h2>";
                     $slide .="<p>$foto->dis_descripcion</p>";
                     $slide .="</div>";
                     $slide .="<div class='col-sm-6'>";
@@ -41,7 +41,7 @@ class Inicio extends MY_controller {
                     $slide .="<div class='item'>";
                     $slide .="<div class='col-sm-6'>";
                     $slide .="<h1><span>E</span>-SHOPPER</h1>";
-                    $slide .="<h2>'".$foto->dis_titulo."'</h2>";
+                    $slide .="<h2>".$foto->dis_titulo."</h2>";
                     $slide .="<p>$foto->dis_descripcion</p>";
                     $slide .="</div>";
                     $slide .="<div class='col-sm-6'>";
@@ -76,12 +76,12 @@ class Inicio extends MY_controller {
                     $cadena .= $tag_final;
                     $cadena .= $recomendado2_inicio;
                 }
-                $cadena .="<div class = 'col-sm-4'>";
+                $cadena .="<div class = 'col-sm-4 col-sx-4'>";
                     $cadena .="<div class = 'product-image-wrapper'>";
                         $cadena .="<div class = 'single-products'>";
                             $cadena .="<div class = 'productinfo text-center'>";
                                 $cadena .="<img src = '".$foto->ruta."' alt = '' />";
-                                $cadena .="<h2>'$".$foto->precio_venta."'</h2>";
+                                $cadena .="<h2>$".$foto->precio_venta."</h2>";
                                 $cadena .="<p>'".$foto->descripcion."'</p>";
                                 $cadena .="<a href = '#' class = 'btn btn-default add-to-cart'><i class = 'fa fa-shopping-cart'></i>Agregar a carrito</a>";
                             $cadena .="</div>";

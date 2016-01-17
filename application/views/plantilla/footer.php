@@ -48,7 +48,14 @@
 	<script src="<?php echo base_url();?>assets/js/bootstrap.min.js"></script>
 	<script src="<?php echo base_url();?>assets/js/jquery.scrollUp.min.js"></script>
 	<script src="<?php echo base_url();?>assets/js/price-range.js"></script>
-    <script src="<?php echo base_url();?>assets/js/jquery.prettyPhoto.js"></script>
     <script src="<?php echo base_url();?>assets/js/main.js"></script>
+    <!--<script src="<?php echo base_url();?>assets/js/bootbox.js"></script>-->
+    
+    <script>
+        $(document).ready(function(){
+            if ($("div#mensaje")) {
+            setTimeout(function(){ $("div#mensaje").hide("slow"); }, 4000);
+        }}); 
+    </script>    
 </body>
 </html>
