@@ -10,7 +10,11 @@ class Account extends MY_controller {
     }
 
     public function index() {
+         if(!$this->session->userdata('logueado')){
+            redirect(base_url()); 
+        }else{
         $this->Plantilla("cuenta", array());
+        }
     }
 
 }
