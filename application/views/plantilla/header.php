@@ -37,7 +37,7 @@
                                 <ul class="nav navbar-nav">
                                     <li><a href="<?php echo base_url(); ?>"><i class="fa fa-home"></i> Inicio</a></li>
                                     <?php if ($this->session->userdata('logueado') == true) { ?>
-                                    <li><a href="<?php echo base_url()?>index.php/panel-usuario"><i class="fa fa-user"></i> Bienvenido <?php echo $this->session->userdata('nombre') ?></a></li>
+                                    <li><a href="<?php echo base_url()?>index.php/panel-usuario"><i class="fa fa-user"></i> Bienvenido <?php echo $this->session->userdata('nombre') ?>/ver cuenta</a></li>
                                     <?php } else { ?>
                                         <li><a href="<?php echo base_url(); ?>index.php/login"><i class="fa fa-user"></i> Cuenta</a></li>
                                     <?php } ?>
