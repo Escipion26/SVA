@@ -45,17 +45,13 @@
                         <div class="form-group">
                             <label class="control-label col-md-3">Seleccione Provincia</label>
                             <div class="col-md-9">
-                                <select class="form-control" name="provincia" id="provincia" required>
-                                    <option value="">Selecciona tu provincia</option>
-                                </select>
+                                 <?php echo $provincias; ?>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Seleccione comuna</label>
                             <div class="col-md-9">
-                                <select class="form-control" name="comuna" id="comuna" required>
-                                    <option value="">Selecciona tu comuna</option>
-                                </select>
+                                 <?php echo $comunas; ?>
                             </div>
                         </div>
                     </div>
@@ -68,49 +64,3 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
-
-
-<script type="text/javascript">
-    $(document).on('ready', function () {
-        cargaProvincias();
-        $('#region').change(cargaProvincias);
-    });
-
-    function cargaProvincias() {
-        var idRegion = $('#region').val();
-        $.getJson('Account/llenar_provincias', {id: idRegion}, function (resp) {
-            $('#provincia').empty();
-
-            $.each(resp, function (indice, valor) {
-                option = $('<option></option>', {
-                    value: indice,
-                    text: valor
-                });
-
-                $('#provincia').append(option);
-            });
-        });
-    }
-
-    $("#regiones").on("change", function ()
-    {
-        //obtenemos la id de la provincia seleccionada
-        var region = $("#regiones option:selected").attr("value");
-        //hacemos la petición via get contra home/getAjaxPoblacion pasando la provincia
-        $.get("<?php echo base_url('Account/llenar_provincias') ?>", {"region": region}, function (data)
-        {
-            $('#provincia').empty();
-
-            $.each(resp, function (indice, valor) {
-                option = $('<option></option>', {
-                    value: indice,
-                    text: valor
-                });
-
-                $('#provincia').append(option);
-            });
-
-        });
-    });
-
-</script>

@@ -44,19 +44,61 @@
     </div>
 
 </footer><!--/Footer-->
- <script src="<?php echo base_url();?>assets/js/jquery.js"></script>
- <script src="<?php echo base_url();?>assets/js/ajax.js"></script>
-	<script src="<?php echo base_url();?>assets/js/bootstrap.min.js"></script>
-	<script src="<?php echo base_url();?>assets/js/jquery.scrollUp.min.js"></script>
-	<script src="<?php echo base_url();?>assets/js/price-range.js"></script>
-    <script src="<?php echo base_url();?>assets/js/main.js"></script>
-    <!--<script src="<?php echo base_url();?>assets/js/bootbox.js"></script>-->
-    
-    <script>
-        $(document).ready(function(){
-            if ($("div#mensaje")) {
-            setTimeout(function(){ $("div#mensaje").hide("slow"); }, 4000);
-        }}); 
-    </script>    
+<script>
+    $(document).ready(function () {
+        if ($("div#mensaje")) {
+            setTimeout(function () {
+                $("div#mensaje").hide("slow");
+            }, 4000);
+        }
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("select#regiones").change(function () {
+            var idregion = $("#regiones").val();
+            $("#comuna").val(0);
+            $.ajax({
+                dataType: 'JSON',
+                data: {idregion: idregion},
+                url: "<?php echo base_url() ?>" + "index.php/Account/llenar_provincias",
+                type: 'POST',
+                beforeSend: function () {
+                    //Lo que se hace antes de enviar el formulario
+                    //$("#razon_social").html("Cargando...");
+                },
+                success: function (respuesta) {
+                    //lo que se si el destino devuelve algo
+                    $("#provincia").html(respuesta.respuesta);
+                },
+                error: function (xhr, err) {
+                    alert("readyState: " + xhr.readyState + "\nstatus: " + xhr.status + "\n \n responseText: " + xhr.responseText);
+                }
+            });
+        });
+    });
+    $(document).ready(function () {
+        $("select#provincia").change(function () {
+            var idpro = $("#provincia").val();
+            $.ajax({
+                dataType: 'JSON',
+                data: {idpro: idpro},
+                url: "<?php echo base_url() ?>" + "index.php/Account/llenar_comunas",
+                type: 'POST',
+                beforeSend: function () {
+                    //Lo que se hace antes de enviar el formulario
+                    //$("#razon_social").html("Cargando...");
+                },
+                success: function (respuesta) {
+                    //lo que se si el destino devuelve algo
+                    $("#comuna").html(respuesta.respuesta);
+                },
+                error: function (xhr, err) {
+                    alert("readyState: " + xhr.readyState + "\nstatus: " + xhr.status + "\n \n responseText: " + xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>
