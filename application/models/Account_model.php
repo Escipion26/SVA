@@ -70,6 +70,8 @@ Class Account_model extends CI_Model {
 
         if ($query) {
             return $query->row();
+        }  else {
+            return FALSE;
         }
     }
 
@@ -82,6 +84,8 @@ Class Account_model extends CI_Model {
 
         if ($query) {
             return $query->row();
+        }  else {
+            return FALSE;
         }
     }
 
@@ -128,6 +132,8 @@ Class Account_model extends CI_Model {
 
         if ($query) {
             return $query->row();
+        }  else {
+            return FALSE;
         }
     }
 

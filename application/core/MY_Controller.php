@@ -1,23 +1,25 @@
- <?php (defined('BASEPATH')) OR exit('No direct script access allowed');
+<?php
 
+(defined('BASEPATH')) OR exit('No direct script access allowed');
 
 /**
-* 
-*/
-class MY_controller extends CI_Controller{
-	
+ * 
+ */
+class MY_controller extends CI_Controller {
 
- public function __construct() {
+    public function __construct() {
         parent::__construct();
- }
+        $this->load->model('account_model');
+    }
 
- public function Plantilla($view, $data = array()){
-     
-     
-     $this->load->view("plantilla/header");
-     $this->load->view($view,$data);
-     $this->load->view("plantilla/footer");
-        
- } 
+    public function Plantilla($view, $data = array()) {
+
+
+        $this->load->view("plantilla/header");
+        $this->load->view($view, $data);
+        $this->load->view("plantilla/footer");
+    }
+
+   
 
 }

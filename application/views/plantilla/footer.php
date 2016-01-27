@@ -100,5 +100,54 @@
         });
     });
 </script>
+<script>
+    $(document).ready(function () {
+        $("select#reg").change(function () {
+            var idregion = $("#reg").val();
+            $("#com").val(0);
+            $.ajax({
+                dataType: 'JSON',
+                data: {idregion: idregion},
+                url: "<?php echo base_url() ?>" + "index.php/login/llenar_provincias",
+                type: 'POST',
+                beforeSend: function () {
+                    //Lo que se hace antes de enviar el formulario
+                    //$("#razon_social").html("Cargando...");
+                },
+                success: function (respuesta) {
+                    //lo que se si el destino devuelve algo
+                    $("#pro").html(respuesta.respuesta);
+                },
+                error: function (xhr, err) {
+                    alert("readyState: " + xhr.readyState + "\nstatus: " + xhr.status + "\n \n responseText: " + xhr.responseText);
+                }
+            });
+        });
+    });
+    $(document).ready(function () {
+        $("select#pro").change(function () {
+            var idpro = $("#pro").val();
+            $.ajax({
+                dataType: 'JSON',
+                data: {idpro: idpro},
+                url: "<?php echo base_url() ?>" + "index.php/login/llenar_comunas",
+                type: 'POST',
+                beforeSend: function () {
+                    //Lo que se hace antes de enviar el formulario
+                    //$("#razon_social").html("Cargando...");
+                },
+                success: function (respuesta) {
+                    //lo que se si el destino devuelve algo
+                    $("#com").html(respuesta.respuesta);
+                },
+                error: function (xhr, err) {
+                    alert("readyState: " + xhr.readyState + "\nstatus: " + xhr.status + "\n \n responseText: " + xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+
+
 </body>
 </html>

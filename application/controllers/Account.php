@@ -131,7 +131,21 @@ class Account extends MY_controller {
         }
     }
 
-    public function traer_regiones() { //carga select del modal
+    public function traer_direccion() { //llena campos del modal
+        $id_direccion = $this->input->post('id_direccion');
+
+        $data = $this->account_model->traer_direccion($id_direccion);
+
+        $arr = array(
+            'nombre' => $data->dir_nombre,
+            'direccion' => $data->dir_direccion,
+            'id_direccion' => $data->idtab_direcciones
+        );
+
+        echo json_encode($arr);
+    }
+    
+     public function traer_regiones() { //carga select del modal
         $dato = $this->account_model->traer_regiones();
         $data = $this->account_model->traer_region();
 
@@ -177,7 +191,7 @@ class Account extends MY_controller {
 
         return $cadena;
     }
-
+    
     public function traer_comunas() {
         $id_provincia = $this->session->userdata('id_provincia');
         $this->session->unset_userdata('id_provincia'); //elimino sesion id region
@@ -200,20 +214,6 @@ class Account extends MY_controller {
         $cadena .="</select>";
 
         return $cadena;
-    }
-
-    public function traer_direccion() { //llena campos del modal
-        $id_direccion = $this->input->post('id_direccion');
-
-        $data = $this->account_model->traer_direccion($id_direccion);
-
-        $arr = array(
-            'nombre' => $data->dir_nombre,
-            'direccion' => $data->dir_direccion,
-            'id_direccion' => $data->idtab_direcciones
-        );
-
-        echo json_encode($arr);
     }
 
     public function llenar_provincias() {
