@@ -184,7 +184,7 @@ class Login extends MY_controller {
         $dato = $this->login_model->regiones();
 
         $cadena = "";
-        $cadena .="<select name='reg' id='reg' class='form-control'>";
+        $cadena .="<select name='reg' id='reg' class=''>";
         $cadena .= "<option value='0'>------Seleccione region------</option>";
 
         foreach ($dato as $row) {
@@ -200,7 +200,7 @@ class Login extends MY_controller {
         $dato = $this->login_model->provincias();
 
         $cadena = "";
-        $cadena .="<select name='pro' id='pro' class='form-control'>";
+        $cadena .="<select name='pro' id='pro' class=''>";
         $cadena .= "<option value='0'>------Seleccione provincia------</option>";
         foreach ($dato as $row) {
             $cadena .="<option value='" . $row->idtab_provincia . "'>" . $row->prov_nombre . "</option>";
@@ -246,7 +246,7 @@ class Login extends MY_controller {
         $dato = $this->login_model->comunas();
 
         $cadena = "";
-        $cadena .="<select name='com' id='com' class='form-control'>";
+        $cadena .="<select name='com' id='com' class=''>";
         $cadena .= "<option value='0'>------Seleccione comuna------</option>";
         foreach ($dato as $row) {
             $cadena .="<option value='" . $row->idtab_comuna . "'>" . $row->com_nombre . "</option>";

@@ -7,6 +7,7 @@ class Account extends MY_controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('account_model');
+        $this->load->library('recursos');
     }
 
     public function index() {
@@ -34,7 +35,7 @@ class Account extends MY_controller {
         return $cadena;
     }
 
-    public function datos_personales() {
+    public function datos_personales() { //url informacion-personal
 
         $id_cliente = $this->session->userdata('id_cliente');
 
@@ -89,7 +90,7 @@ class Account extends MY_controller {
     
    
 
-    public function direcciones() {
+    public function direcciones() { // url direccion-despacho
 
         $id_cliente = $this->session->userdata('id_cliente');
 
@@ -147,7 +148,7 @@ class Account extends MY_controller {
         echo json_encode($arr);
     }
     
-    public function traer_datos(){
+    public function traer_datos(){ //llena datos personales en modal (primer menu)
         
         $idcliente = $this->input->post('id_cliente');
         
@@ -226,7 +227,7 @@ class Account extends MY_controller {
     
     public function traer_comunas() {
         $id_provincia = $this->session->userdata('id_provincia');
-        $this->session->unset_userdata('id_provincia'); //elimino sesion id region
+        $this->session->unset_userdata('id_provincia'); //elimino sesion id provincia
 
         $dato = $this->account_model->select_comunas($id_provincia);
         $data = $this->account_model->traer_comuna();
@@ -248,7 +249,7 @@ class Account extends MY_controller {
         return $cadena;
     }
 
-    public function llenar_provincias() {
+    public function llenar_provincias() {  //llena select con provincias en modal modificar direcciones
 
         $cadena = "";
         $idreg = $this->input->post('idregion');
@@ -269,7 +270,7 @@ class Account extends MY_controller {
         echo json_encode($arr);
     }
 
-    public function llenar_comunas() {
+    public function llenar_comunas() { //llena select con comunas en modal modificar direcciones
 
 
         $cadena = "";
@@ -288,6 +289,21 @@ class Account extends MY_controller {
         );
 
         echo json_encode($arr);
+    }
+
+
+    public function Actualizar_datos(){
+
+        $rut = $this->recursos->FormatoRut($this->input->post('rut'));
+        $nombre = $this->input->post('nombre');
+        $apellido = $this->input->post('apellido');
+        $correo = $this->input->post('correo');
+        $contacto1 =  $this->input->post('contacto1');
+        $contacto2 =  $this->input->post('contacto2');
+
+        
+
+
     }
 
 }

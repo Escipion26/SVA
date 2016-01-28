@@ -6,6 +6,7 @@
         <meta name="author" content="">
         <title>Carshop</title>
         <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="<?php echo base_url(); ?>assets/css/alertify.min.css" rel="stylesheet">
         <link href="<?php echo base_url(); ?>assets/css/font-awesome.min.css" rel="stylesheet">
         <link href="<?php echo base_url(); ?>assets/css/prettyPhoto.css" rel="stylesheet">
         <link href="<?php echo base_url(); ?>assets/css/price-range.css" rel="stylesheet">
@@ -16,6 +17,7 @@
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
         <![endif]-->       
+        
         <link rel="shortcut icon" href="images/ico/favicon.ico">
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo base_url(); ?>assets/images/ico/apple-touch-icon-144-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo base_url(); ?>assets/images/ico/apple-touch-icon-114-precomposed.png">
@@ -23,12 +25,14 @@
         <link rel="apple-touch-icon-precomposed" href="<?php echo base_url(); ?>assets/images/ico/apple-touch-icon-57-precomposed.png">
         
         <script src="<?php echo base_url();?>assets/js/jquery.js"></script>
+        <script src="<?php echo base_url();?>assets/js/alertify.js"></script>
         <script src="<?php echo base_url();?>assets/js/Rut.js"></script>
- <script src="<?php echo base_url();?>assets/js/ajax.js"></script>
-	<script src="<?php echo base_url();?>assets/js/bootstrap.min.js"></script>
-	<script src="<?php echo base_url();?>assets/js/jquery.scrollUp.min.js"></script>
-	<script src="<?php echo base_url();?>assets/js/price-range.js"></script>
-    <script src="<?php echo base_url();?>assets/js/main.js"></script>
+        <script src="<?php echo base_url();?>assets/js/ajax.js"></script>
+        <script src="<?php echo base_url();?>assets/js/bootstrap.min.js"></script>
+	   <script src="<?php echo base_url();?>assets/js/jquery.scrollUp.min.js"></script>
+	   <script src="<?php echo base_url();?>assets/js/price-range.js"></script>
+        <script src="<?php echo base_url();?>assets/js/main.js"></script>
+        <script src="<?php echo base_url();?>assets/js/bootbox.min.js"></script>
     </head><!--/head-->
     <body>
         <header id="header"><!--header-->

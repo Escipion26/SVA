@@ -178,12 +178,9 @@
 
 }
 
-$('#rut').Rut({
-        on_error: function(){ alert('Favor ingrese un rut válido');
-            $('#rut').val(''); 
-            document.getElementById('rut');
-        }
-    });
+    
+
+
 </script>
 
 

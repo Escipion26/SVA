@@ -25,3 +25,22 @@ function ObtieneDireccion(id_direccion) {
 
 }
 
+function ValidaNum() {
+    //alert(event.keyCode);
+    if (event.keyCode < 48 || (event.keyCode > 57 && event.keyCode < 65) || (event.keyCode > 90 && event.keyCode < 97) || event.keyCode > 122 ) {
+        event.returnValue = false;
+    }
+}
+
+function ValidaLetras(){
+
+    alert('aoakoa');
+    letras_latinas = /^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ\s]+$/;
+
+    if(!$(":text#nombre").attr("value").match(letras_latinas)){
+         bootbox.alert("Debe ingresar solo letras");
+         document.getElementById('nombre')focus('); 
+    }
+
+}
+

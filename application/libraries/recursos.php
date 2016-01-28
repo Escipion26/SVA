@@ -69,80 +69,12 @@ class Recursos{
         return $fecha;
     }
     
-    function EstadoRed($url){
-        $f = @fopen($url,'r');
-        if($f !== false){
-            return true;
-        }else{
-            return false;
-        }
-    }
-    
-    /*function Indicadores(){
-        $xmlSource = "http://indicadoresdeldia.cl/webservice/indicadores.xml";
-        $estado = $this->EstadoRed($xmlSource);
-        if($estado){
-            return (simplexml_load_file($xmlSource));
-        }else{
-            return false;
-        }
-    }*/
-    
-    function Indicadores(){
-        $url = "http://mindicador.cl/api";
-        $estado = $this->EstadoRed($url);
-        if($estado){
-            if(ini_get('allow_url_fopen')){
-                $json = file_get_contents($url);
-            }else{
-                $curl = curl_init($url);
-                curl_setopt($curl,CURLOPT_RETURNTRANSFER,true);
-                $json = curl_exec($curl);
-                curl_close($curl);
-            }
-            $indicadores = json_decode($json);
-            $indica['euro'] = $this->FormatoMoneda($indicadores->euro->valor);
-            $indica['uf'] = $this->FormatoMoneda($indicadores->uf->valor);
-            $indica['dolar'] = $this->FormatoMoneda($indicadores->dolar->valor);
-            $indica['utm'] = $this->FormatoMoneda($indicadores->utm->valor);
-            return $indica;
-        }else{
-            return false;
-        }
-    }
-    
     function FormatoRut($rut1){
         $rut1 = explode("-", $rut1);
         $rut = $rut1[0];
         return ($rut);
     }
     
-    function UltimoDiaMes(){
-        $anio = date('Y');
-        $mes = date('m');
-        $fecha = date("d",(mktime(0,0,0,$mes+1,1,$anio)-1));
-        $fecha = $fecha."-".$mes."-".$anio;
-        return ($fecha);
-    }
-    
-    function PrimerDiaMes() {
-        $month = date('m');
-        $year = date('Y');
-        return date('Y-m-d', mktime(0,0,0, $month, 1, $year));
-    }
-    
-    function IngresoIndicadores(){
-        //$fecha = $this->sumaFechas2('-9 day');
-        $fecha = $this->sumaFechas2('9 day');
-        $fecha_ant = $this->sumaFechas('0 day');
-        $fecha_pos = $this->sumaFechas('10 day');
-        
-        if($fecha >= $fecha_ant && $fecha <= $fecha_pos){
-            return 1;
-        }else{
-            return 0;
-        }
-    }
     
     function Formato1($val){//formatea el monto de las monedas
         return number_format($val,0,",",".");

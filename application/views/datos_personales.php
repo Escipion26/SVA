@@ -32,13 +32,13 @@
                         <div class="form-group">
                             <label class="control-label col-md-3">Rut</label>
                             <div class="col-md-9">
-                                <input name="rut" id="rut" placeholder="Ingrese su rut" required class="form-control" type="text">
+                                <input name="rut" onblur="validaRut(this)" id="rut" placeholder="Ingrese su rut" required class="form-control" type="text">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Nombre</label>
                             <div class="col-md-9">
-                                <input name="nombre" id="nombre" placeholder="Ingrese su nombre" required class="form-control" type="text">
+                                <input name="nombre" onfocus="this.ValidaLetras();" id="nombre" placeholder="Ingrese su nombre" required class="form-control" type="text">
                             </div>
                         </div>
                         <div class="form-group">
