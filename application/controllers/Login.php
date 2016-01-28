@@ -7,7 +7,6 @@ class Login extends MY_controller {
     public function __construct() {
         parent::__construct();
         $this->load->model("login_model");
-        $this->load->library('bcrypt');
     }
 
     public function index() {

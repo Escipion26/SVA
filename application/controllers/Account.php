@@ -77,7 +77,7 @@ class Account extends MY_controller {
             $cadena .= "<td>" . $fono2 . "</td>";
             $cadena .= "</tr>";
             $cadena .= "</table>";
-
+            $cadena .= "<button type='button' data-target='#DatosModal' onclick='ObtieneDatos(".$id_cliente.")' data-toggle='modal' class='btn btn-primary pull-right'>Modificar</button>";
             $data['menu'] = $this->menu_cuenta();
             $data['datos_personales'] = $cadena;
 
@@ -86,6 +86,8 @@ class Account extends MY_controller {
             
         }
     }
+    
+   
 
     public function direcciones() {
 
@@ -143,6 +145,36 @@ class Account extends MY_controller {
         );
 
         echo json_encode($arr);
+    }
+    
+    public function traer_datos(){
+        
+        $idcliente = $this->input->post('id_cliente');
+        
+        $datos = $this->account_model->traer_cliente($idcliente);
+        
+        if($datos){
+
+            $rut = ($datos->cli_rut == null) ? ' ' : $datos->cli_rut;
+            $nombre = ($datos->cli_nombre == null) ? ' ' : $datos->cli_nombre;
+            $apellido = ($datos->cli_apellido == null) ? ' ' : $datos->cli_apellido;
+            $correo = ($datos->cli_correo == null) ? ' ' : $datos->cli_correo;
+            $fono1 = ($datos->cli_fono1 == null) ? ' ' : $datos->cli_fono1;
+            $fono2 = ($datos->cli_fono2 == null) ? ' ' : $datos->cli_fono2;
+            
+            $arr = array(
+                'rut' => $rut,
+                'nombre' => $nombre,
+                'apellido' => $apellido,
+                'correo' => $correo,
+                'fono1' => $fono1,
+                'fono2' => $fono2    
+            );
+            
+        }
+        
+        echo json_encode($arr); 
+        
     }
     
      public function traer_regiones() { //carga select del modal

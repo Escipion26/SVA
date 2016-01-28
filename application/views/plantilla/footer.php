@@ -147,6 +147,44 @@
         });
     });
 </script>
+<script>
+    function ObtieneDatos(id_cliente) {
+    $id_cliente = id_cliente;
+    
+    $(document).ready(function () {
+        $.ajax({
+            dataType: "json",
+            data: {"id_cliente": $id_cliente},
+            url: "<?php echo base_url()?>"+"index.php/Account/traer_datos",
+            type: 'post',
+            beforeSend: function () {
+                //Lo que se haceestan  antes de enviar el formulario
+                //$("#razon_social").html("Cargando...");
+            },
+            success: function (respuesta) {
+                //lo que se si el destino devuelve algo
+                $("#rut").val(respuesta.rut);
+                $("#nombre").val(respuesta.nombre);
+                $("#apellido").val(respuesta.apellido);
+                $("#correo").val(respuesta.correo);
+                $("#fono1").val(respuesta.fono1);
+                $("#fono2").val(respuesta.fono2);
+            },
+            error: function (xhr, err) {
+                alert("readyState: " + xhr.readyState + "\nstatus: " + xhr.status + "\n \n responseText: " + xhr.responseText);
+            }
+        });
+    });
+
+}
+
+$('#rut').Rut({
+        on_error: function(){ alert('Favor ingrese un rut válido');
+            $('#rut').val(''); 
+            document.getElementById('rut');
+        }
+    });
+</script>
 
 
 </body>

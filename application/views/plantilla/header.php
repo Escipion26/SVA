@@ -23,6 +23,7 @@
         <link rel="apple-touch-icon-precomposed" href="<?php echo base_url(); ?>assets/images/ico/apple-touch-icon-57-precomposed.png">
         
         <script src="<?php echo base_url();?>assets/js/jquery.js"></script>
+        <script src="<?php echo base_url();?>assets/js/Rut.js"></script>
  <script src="<?php echo base_url();?>assets/js/ajax.js"></script>
 	<script src="<?php echo base_url();?>assets/js/bootstrap.min.js"></script>
 	<script src="<?php echo base_url();?>assets/js/jquery.scrollUp.min.js"></script>
