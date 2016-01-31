@@ -69,5 +69,27 @@ function ActualizaDatos(){
     
 }
 
+function insertdireccion(){
+    $base = $("#base").val();
+    $(document).ready(function () {
+            $.ajax({
+                dataType: 'JSON',
+                data: {},
+                url: ""+$base+"index.php/Account/regiones_insert",
+                type: 'POST',
+                beforeSend: function () {
+                    //Lo que se hace antes de enviar el formulario
+                    //$("#razon_social").html("Cargando...");
+                },
+                success: function (respuesta) {
+                    //lo que se si el destino devuelve algo
+                    $("#regiones_insert").html(respuesta.regiones);
+                },
+                error: function (xhr, err) {
+                    alert("readyState: " + xhr.readyState + "\nstatus: " + xhr.status + "\n \n responseText: " + xhr.responseText);
+                }
+            });
+        });
+}
 
 

@@ -15,7 +15,7 @@
                     <form action="<?php echo base_url() ?>index.php/login/inicio_sesion" method="post">
                         <input type="text" name="email" value="<?php echo set_value("email") ?>" placeholder="Email" />
                         <input type="password" name="password" placeholder="Contraseña" />
-                        <button type="submit" class="btn btn-default">Inicio sesion</button>
+                        <button type="submit" class="btn btn-primary">Inicio sesion</button>
                     </form>
                 </div><!--/login form-->
             </div>
@@ -29,7 +29,7 @@
                                     <input class="form-control" type="text" name="nombre" value="<?php echo set_value('nombre')?>" placeholder="Nombre"/>
                                 </div>
                                 <input type="email" name="correo" value="<?php echo set_value('correo')?>" placeholder="Email"/>
-                                <input type="text" name="direccion" value="<?php echo set_value('direccion')?>" placeholder="Direccion"/>
+                                <input type="text" name="direccion" value="<?php echo set_value('direccion')?>" placeholder="Direccion despacho"/>
                                 <div class="form-group">
                                     <?php echo $regiones; ?>
                                 </div>
@@ -41,7 +41,7 @@
                                 </div>
                                 <input type="password" name="password" placeholder="Constraseña"/>
                                 <input type="password" name="password2" placeholder="Reingrese Constraseña"/>
-                                <button type="submit" class="btn btn-default">Registrate</button>
+                                <button type="submit" class="btn btn-primary">Registrate</button>
                             </form>    
                         </div>
                     </div>    

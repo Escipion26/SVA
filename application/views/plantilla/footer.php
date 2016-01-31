@@ -193,6 +193,53 @@
 
 
 </script>
+<script>
+    $(document).ready(function () {
+        $("select#regiones_insert").change(function () {
+            var idregion = $("#regiones_insert").val();
+            $("#comunas_insert").val(0);
+            $.ajax({
+                dataType: 'JSON',
+                data: {idregion: idregion},
+                url: "<?php echo base_url() ?>" + "index.php/Account/llenar_provincias",
+                type: 'POST',
+                beforeSend: function () {
+                    //Lo que se hace antes de enviar el formulario
+                    //$("#razon_social").html("Cargando...");
+                },
+                success: function (respuesta) {
+                    //lo que se si el destino devuelve algo
+                    $("#provincias_insert").html(respuesta.respuesta);
+                },
+                error: function (xhr, err) {
+                    alert("readyState: " + xhr.readyState + "\nstatus: " + xhr.status + "\n \n responseText: " + xhr.responseText);
+                }
+            });
+        });
+    });
+    $(document).ready(function () {
+        $("select#provincias_insert").change(function () {
+            var idpro = $("#provincias_insert").val();
+            $.ajax({
+                dataType: 'JSON',
+                data: {idpro: idpro},
+                url: "<?php echo base_url() ?>" + "index.php/Account/llenar_comunas",
+                type: 'POST',
+                beforeSend: function () {
+                    //Lo que se hace antes de enviar el formulario
+                    //$("#razon_social").html("Cargando...");
+                },
+                success: function (respuesta) {
+                    //lo que se si el destino devuelve algo
+                    $("#comunas_insert").html(respuesta.respuesta);
+                },
+                error: function (xhr, err) {
+                    alert("readyState: " + xhr.readyState + "\nstatus: " + xhr.status + "\n \n responseText: " + xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
 
 
 </body>

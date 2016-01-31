@@ -132,6 +132,7 @@ class Account extends MY_controller {
         $id_cliente = $this->session->userdata('id_cliente');
 
         $datos = $this->account_model->traer_direcciones($id_cliente);
+        $cuenta = $this->account_model->cuenta_direcciones($id_cliente);
 
         if ($datos) {
 
@@ -139,7 +140,7 @@ class Account extends MY_controller {
 
             $cadena .= "<table class='table table-responsive table-bordered table-hover'>";
             $cadena .= "<tr>";
-            $cadena .= "<td colspan='7'><button type='button' class='btn btn-outline btn-primary pull-left'>Agregar direccion</td>";
+            $cadena .= "<td colspan='7'><button type='button'data-target='#InsertarModal' onclick='insertdireccion()' data-toggle='modal' class='btn btn-outline btn-primary pull-left'>Agregar direccion</td>";
             $cadena .= "</tr>";
             $cadena .= "<tr>";
             $cadena .= "<td class='active'>Nombre</td>";
@@ -159,7 +160,10 @@ class Account extends MY_controller {
                 $cadena .= "<td>" . $row->com_nombre . "</td>";
                 $cadena .= "<input type='hidden' id='id_provincia' value=''>";
                 $cadena .= "<td><button type='button' data-target='#EditarModal' onclick='ObtieneDireccion(" . $row->idtab_direcciones . ")' data-toggle='modal' class='btn btn-success pull-right'>Modificar</button></td>";
-                $cadena .= "<td><button type='button' onclick='EliminarDireccion(" . $row->idtab_direcciones . ")' class='btn btn-danger pull-left' id='eliminar'>Eliminar</button></td>";
+                if($cuenta > 1){
+                    $cadena .= "<td><button type='button' onclick='EliminarDireccion(" . $row->idtab_direcciones . ")' class='btn btn-danger pull-left' id='eliminar'>Eliminar</button></td>";
+                }
+                
                 $cadena .= "</tr>";
             }
 
@@ -186,6 +190,21 @@ class Account extends MY_controller {
         );
 
         echo json_encode($arr);
+    }
+    
+    
+    public function regiones_insert(){ //para llenar select al insertar nueva direccion
+        $cadena = ''; 
+        $dato = $this->account_model->traer_regiones();
+         
+        foreach ($dato as $row){
+           $cadena .="<option value='" . $row->idtab_region . "'>" . $row->reg_nombre . "</option>"; 
+        }
+        
+        
+        $data['regiones'] = $cadena;
+        
+        echo json_encode($data);
     }
 
     public function traer_datos() { //llena datos personales en modal (primer menu)

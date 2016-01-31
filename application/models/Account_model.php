@@ -173,5 +173,16 @@ Class Account_model extends CI_Model {
         }
         
     }
+    
+    public function cuenta_direcciones($id_cliente){
+        $this->db->select('idtab_direcciones');
+        $this->db->from('tab_direcciones');
+        $this->db->where('tab_clientes_idtab_clientes',$id_cliente);
+        
+        $query = $this->db->get();
+        
+        return $query->num_rows();
+        
+    }
 
 }
