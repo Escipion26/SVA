@@ -35,8 +35,53 @@ class Account extends MY_controller {
         return $cadena;
     }
 
-    public function datos_personales() { //url informacion-personal
+    public function ActualizaDatos() { //Actualiza datos personales. Datos enviados de modal
 
+        $id_cliente = $this->input->post('id_cliente');
+        $rut = $this->input->post('rut');
+        $nombre = $this->input->post('nombre');
+        $apellido = $this->input->post('apellido');
+        $contacto1 = $this->input->post('contacto1');
+        $contacto2 = $this->input->post('contacto2');
+
+
+        $this->form_validation->set_rules('rut', 'Rut', 'trim|required|callback_validaRut_check|max_length[10]');
+        $this->form_validation->set_rules('nombre', 'Nombre', 'trim|required');
+        $this->form_validation->set_rules('apellido', 'Apellido', 'trim|required');
+        $this->form_validation->set_rules('contacto1', 'Contacto 1', 'trim|required|numeric|min_length[8]');
+        $this->form_validation->set_rules('contacto2', 'Contacto 2', 'trim|numeric');
+
+        $this->form_validation->set_message('required', 'El campo %s es obligatorio');
+        $this->form_validation->set_message('numeric', 'El campo %s debe contener solo numeros');
+        $this->form_validation->set_message('xss_clean', 'El campo %s contiene caracteres invalidos');
+        $this->form_validation->set_message('min_length', 'El campo %s debe tener minimo 9 caracteres');
+        $this->form_validation->set_message('max_length', 'El campo %s no debe tener mas de 9 caracteres');
+
+        if ($this->form_validation->run() == FALSE) {
+            $data['resp'] = FALSE;
+            $data['mensaje'] = validation_errors();
+            echo json_encode($data);
+        } else {
+
+            $datos = $this->account_model->ActualizarDatos(
+                    $id_cliente, $this->recursos->FormatoRut($rut), $nombre, $apellido, $contacto1, $contacto2
+            );
+            
+            if($datos){
+                $data['resp'] = TRUE;
+                $data['mensaje'] = "Su datos fueron actualizados correctamente";
+                echo json_encode($data);
+            }  else {
+                $data['resp'] = FALSE;
+                $data['mensaje'] = "Error al actualizar los datos";
+                echo json_encode($data);
+            }
+            
+            
+        }
+    }
+
+    public function datos_personales() { //url informacion-personal
         $id_cliente = $this->session->userdata('id_cliente');
 
         $datos = $this->account_model->traer_cliente($id_cliente);
@@ -48,14 +93,13 @@ class Account extends MY_controller {
             $rut = ($datos->cli_rut == null) ? ' ' : $datos->cli_rut;
             $nombre = ($datos->cli_nombre == null) ? ' ' : $datos->cli_nombre;
             $apellido = ($datos->cli_apellido == null) ? ' ' : $datos->cli_apellido;
-            $correo = ($datos->cli_correo == null) ? ' ' : $datos->cli_correo;
             $fono1 = ($datos->cli_fono1 == null) ? ' ' : $datos->cli_fono1;
             $fono2 = ($datos->cli_fono2 == null) ? ' ' : $datos->cli_fono2;
 
             $cadena .= "<table class='table table-bordered table-responsive'>";
             $cadena .= "<tr>";
             $cadena .= "<td class='active col-lg-5 col-md-5 col-sm-5 col-xs-5'>Rut</td>";
-            $cadena .= "<td>" . $rut . "</td>";
+            $cadena .= "<td>" . $this->recursos->DevuelveRut($rut) . "</td>";
             $cadena .= "</tr>";
             $cadena .= "<tr>";
             $cadena .= "<td class='active'>Nombre</td>";
@@ -66,10 +110,6 @@ class Account extends MY_controller {
             $cadena .= "<td>" . $apellido . "</td>";
             $cadena .= "</tr>";
             $cadena .= "<tr>";
-            $cadena .= "<td class='active'>Correo electronico</td>";
-            $cadena .= "<td>" . $correo . "</td>";
-            $cadena .= "</tr>";
-            $cadena .= "<tr>";
             $cadena .= "<td class='active'>Fono 1</td>";
             $cadena .= "<td>" . $fono1 . "</td>";
             $cadena .= "</tr>";
@@ -78,7 +118,7 @@ class Account extends MY_controller {
             $cadena .= "<td>" . $fono2 . "</td>";
             $cadena .= "</tr>";
             $cadena .= "</table>";
-            $cadena .= "<button type='button' data-target='#DatosModal' onclick='ObtieneDatos(".$id_cliente.")' data-toggle='modal' class='btn btn-primary pull-right'>Modificar</button>";
+            $cadena .= "<button type='button' data-target='#DatosModal' onclick='ObtieneDatos(" . $id_cliente . ")' data-toggle='modal' class='btn btn-primary pull-right'>Modificar</button>";
             $data['menu'] = $this->menu_cuenta();
             $data['datos_personales'] = $cadena;
 
@@ -87,11 +127,8 @@ class Account extends MY_controller {
             
         }
     }
-    
-   
 
     public function direcciones() { // url direccion-despacho
-
         $id_cliente = $this->session->userdata('id_cliente');
 
         $datos = $this->account_model->traer_direcciones($id_cliente);
@@ -100,7 +137,10 @@ class Account extends MY_controller {
 
             $cadena = "";
 
-            $cadena .= "<table class='table table-striped table-hover'>";
+            $cadena .= "<table class='table table-responsive table-bordered table-hover'>";
+            $cadena .= "<tr>";
+            $cadena .= "<td colspan='7'><button type='button' class='btn btn-outline btn-primary pull-left'>Agregar direccion</td>";
+            $cadena .= "</tr>";
             $cadena .= "<tr>";
             $cadena .= "<td class='active'>Nombre</td>";
             $cadena .= "<td class='active'>Direccion</td>";
@@ -147,38 +187,34 @@ class Account extends MY_controller {
 
         echo json_encode($arr);
     }
-    
-    public function traer_datos(){ //llena datos personales en modal (primer menu)
-        
-        $idcliente = $this->input->post('id_cliente');
-        
-        $datos = $this->account_model->traer_cliente($idcliente);
-        
-        if($datos){
 
-            $rut = ($datos->cli_rut == null) ? ' ' : $datos->cli_rut;
+    public function traer_datos() { //llena datos personales en modal (primer menu)
+        $idcliente = $this->input->post('id_cliente');
+
+        $datos = $this->account_model->traer_cliente($idcliente);
+
+        if ($datos) {
+
+            $rut = ($datos->cli_rut == null) ? ' ' : $this->recursos->DevuelveRut($datos->cli_rut);
             $nombre = ($datos->cli_nombre == null) ? ' ' : $datos->cli_nombre;
             $apellido = ($datos->cli_apellido == null) ? ' ' : $datos->cli_apellido;
             $correo = ($datos->cli_correo == null) ? ' ' : $datos->cli_correo;
             $fono1 = ($datos->cli_fono1 == null) ? ' ' : $datos->cli_fono1;
             $fono2 = ($datos->cli_fono2 == null) ? ' ' : $datos->cli_fono2;
-            
+
             $arr = array(
                 'rut' => $rut,
                 'nombre' => $nombre,
                 'apellido' => $apellido,
-                'correo' => $correo,
                 'fono1' => $fono1,
-                'fono2' => $fono2    
+                'fono2' => $fono2
             );
-            
         }
-        
-        echo json_encode($arr); 
-        
+
+        echo json_encode($arr);
     }
-    
-     public function traer_regiones() { //carga select del modal
+
+    public function traer_regiones() { //carga select del modal
         $dato = $this->account_model->traer_regiones();
         $data = $this->account_model->traer_region();
 
@@ -224,7 +260,7 @@ class Account extends MY_controller {
 
         return $cadena;
     }
-    
+
     public function traer_comunas() {
         $id_provincia = $this->session->userdata('id_provincia');
         $this->session->unset_userdata('id_provincia'); //elimino sesion id provincia
@@ -250,7 +286,6 @@ class Account extends MY_controller {
     }
 
     public function llenar_provincias() {  //llena select con provincias en modal modificar direcciones
-
         $cadena = "";
         $idreg = $this->input->post('idregion');
         $data = $this->account_model->devolver_provincias($idreg);
@@ -271,8 +306,6 @@ class Account extends MY_controller {
     }
 
     public function llenar_comunas() { //llena select con comunas en modal modificar direcciones
-
-
         $cadena = "";
         $idpro = $this->input->post('idpro');
         $data = $this->account_model->devolver_comunas($idpro);
@@ -291,19 +324,35 @@ class Account extends MY_controller {
         echo json_encode($arr);
     }
 
-
-    public function Actualizar_datos(){
-
-        $rut = $this->recursos->FormatoRut($this->input->post('rut'));
-        $nombre = $this->input->post('nombre');
-        $apellido = $this->input->post('apellido');
-        $correo = $this->input->post('correo');
-        $contacto1 =  $this->input->post('contacto1');
-        $contacto2 =  $this->input->post('contacto2');
-
-        
-
-
+    function validaRut_check($rut) {
+        $suma = 0;
+        if (strpos($rut, "-") == false) {
+            $RUT[0] = substr($rut, 0, -1);
+            $RUT[1] = substr($rut, -1);
+        } else {
+            $RUT = explode("-", trim($rut));
+        }
+        $elRut = str_replace(".", "", trim($RUT[0]));
+        $factor = 2;
+        for ($i = strlen($elRut) - 1; $i >= 0; $i--):
+            $factor = $factor > 7 ? 2 : $factor;
+            $suma += $elRut{$i} * $factor++;
+        endfor;
+        $resto = $suma % 11;
+        $dv = 11 - $resto;
+        if ($dv == 11) {
+            $dv = 0;
+        } else if ($dv == 10) {
+            $dv = "k";
+        } else {
+            $dv = $dv;
+        }
+        if ($dv == trim(strtolower($RUT[1]))) {
+            return true;
+        } else {
+            $this->form_validation->set_message('validaRut_check', '%s invalido');
+            return false;
+        }
     }
 
 }

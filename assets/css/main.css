@@ -1885,7 +1885,7 @@ h2.title {
 
 
 .shopper-info .btn-primary {
-  background: #FE980F;
+  background: #428bca;
   border: 0 none;
   border-radius: 0;
   margin-right: 15px;
@@ -2268,7 +2268,7 @@ h2.title {
 
 .media-list .btn-primary, 
 .commnets .btn-primary {
-  background:#FC9A11;
+  background:#428bca;
   border: 0 none;
   border-radius: 0;
   color: #FFFFFF;
@@ -2389,13 +2389,6 @@ h2.title {
 .text-area textarea {
   background: transparent;
   border: 1px solid#F7F7F0
-}
-
-.btn.btn-primary {
-  background:#2980B9;
-  border: 0 none;
-  border-radius: 0;
-  margin-top: 16px;
 }
 
 .blank-arrow {

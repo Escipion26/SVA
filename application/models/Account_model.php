@@ -153,5 +153,25 @@ Class Account_model extends CI_Model {
 
         return $query->result();
     }
+    
+    public function ActualizarDatos($id_cliente,$rut,$nombre,$apellido,$contacto1,$contacto2){
+        
+        $arr = array(
+            'cli_nombre' => $nombre,
+            'cli_rut'   => $rut,
+            'cli_apellido' => $apellido,
+            'cli_fono1' => $contacto1,
+            'cli_fono2' => $contacto2
+        );
+        
+        $ok = $this->db->update('tab_clientes', $arr,array('idtab_clientes' => $id_cliente));
+        
+        if($ok){
+            return TRUE;
+        }else{
+            return FALSE;
+        }
+        
+    }
 
 }

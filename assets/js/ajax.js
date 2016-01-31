@@ -25,22 +25,49 @@ function ObtieneDireccion(id_direccion) {
 
 }
 
-function ValidaNum() {
-    //alert(event.keyCode);
-    if (event.keyCode < 48 || (event.keyCode > 57 && event.keyCode < 65) || (event.keyCode > 90 && event.keyCode < 97) || event.keyCode > 122 ) {
-        event.returnValue = false;
-    }
+function ActualizaDatos(){
+    $base = $("#base").val();
+    $id_cliente = $("#id_cliente").val();
+    $rut = $("#rut").val();
+    $nombre = $("#nombre").val();
+    $apellido = $("#apellido").val();
+    $contacto1 = $("#contacto1").val();
+    $contacto2 = $("#contacto2").val();
+    $(document).ready(function(){
+            $.ajax({
+                    dataType:   "json",
+                    data    :   {   "id_cliente"  : $id_cliente,
+                                    "rut"     : $rut,
+                                    "nombre"     : $nombre,
+                                    "apellido" : $apellido,
+                                    "contacto1" : $contacto1,
+                                    "contacto2" : $contacto2
+                                },
+                    url     :   ""+$base+"index.php/Account/ActualizaDatos",
+                    type    :   'post',
+                    beforeSend: function(){
+                            //Lo que se haceestan  antes de enviar el formulario
+                            //$("#razon_social").html("Cargando...");
+                    },
+                    success: function(respuesta){
+                            //lo que se si el destino devuelve algo
+                            if(!respuesta.resp){
+                                bootbox.alert(respuesta.mensaje);
+                            }else{
+                              
+                                bootbox.alert(respuesta.mensaje, function() {
+                                    window.location.reload(true);
+                                });
+                            }
+                            //window.location.reload(true);
+                    },
+                    error: function(xhr,err){ 
+                            alert("readyState: "+xhr.readyState+"\nstatus: "+xhr.status+"\n \n responseText: "+xhr.responseText);
+                    }
+            });
+    });
+    
 }
 
-function ValidaLetras(){
 
-    alert('aoakoa');
-    letras_latinas = /^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ\s]+$/;
-
-    if(!$(":text#nombre").attr("value").match(letras_latinas)){
-         bootbox.alert("Debe ingresar solo letras");
-         document.getElementById('nombre')focus('); 
-    }
-
-}
 

@@ -37,13 +37,25 @@
     <div class="footer-bottom">
         <div class="container">
             <div class="row">
-                <p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
-                <p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
+                <p class="pull-left">Copyright © 2016 Carshop Todos los derechos reservados.</p>
+                <p class="pull-right">Dideñado por <span><a target="_blank" href="http://www.dwchile.cl">DWCHILE</a></span></p>
             </div>
         </div>
     </div>
 
 </footer><!--/Footer-->
+
+<script>
+    
+    function ConfirmaDatos(){
+        bootbox.confirm("¿Esta Seguro de actualizar los datos?", function (result) {
+        if(result){
+            ActualizaDatos();
+            true;
+        }
+    });
+    }
+</script>
 <script>
     $(document).ready(function () {
         if ($("div#mensaje")) {
@@ -149,36 +161,35 @@
 </script>
 <script>
     function ObtieneDatos(id_cliente) {
-    $id_cliente = id_cliente;
-    
-    $(document).ready(function () {
-        $.ajax({
-            dataType: "json",
-            data: {"id_cliente": $id_cliente},
-            url: "<?php echo base_url()?>"+"index.php/Account/traer_datos",
-            type: 'post',
-            beforeSend: function () {
-                //Lo que se haceestan  antes de enviar el formulario
-                //$("#razon_social").html("Cargando...");
-            },
-            success: function (respuesta) {
-                //lo que se si el destino devuelve algo
-                $("#rut").val(respuesta.rut);
-                $("#nombre").val(respuesta.nombre);
-                $("#apellido").val(respuesta.apellido);
-                $("#correo").val(respuesta.correo);
-                $("#fono1").val(respuesta.fono1);
-                $("#fono2").val(respuesta.fono2);
-            },
-            error: function (xhr, err) {
-                alert("readyState: " + xhr.readyState + "\nstatus: " + xhr.status + "\n \n responseText: " + xhr.responseText);
-            }
+        $id_cliente = id_cliente;
+
+        $(document).ready(function () {
+            $.ajax({
+                dataType: "json",
+                data: {"id_cliente": $id_cliente},
+                url: "<?php echo base_url() ?>" + "index.php/Account/traer_datos",
+                type: 'post',
+                beforeSend: function () {
+                    //Lo que se haceestan  antes de enviar el formulario
+                    //$("#razon_social").html("Cargando...");
+                },
+                success: function (respuesta) {
+                    //lo que se si el destino devuelve algo
+                    $("#rut").val(respuesta.rut);
+                    $("#nombre").val(respuesta.nombre);
+                    $("#apellido").val(respuesta.apellido);
+                    $("#contacto1").val(respuesta.fono1);
+                    $("#contacto2").val(respuesta.fono2);
+                },
+                error: function (xhr, err) {
+                    alert("readyState: " + xhr.readyState + "\nstatus: " + xhr.status + "\n \n responseText: " + xhr.responseText);
+                }
+            });
         });
-    });
 
-}
+    }
 
-    
+
 
 
 </script>

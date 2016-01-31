@@ -28,17 +28,19 @@
             </div>
             <div class="modal-body form">
                 <form action="#" id="form" class="form-horizontal">
+                    <input type="hidden" id="base" value="<?php echo base_url();?>" >
+                    <input type="hidden" id="id_cliente" value="<?php echo $this->session->userdata('id_cliente');?>" >
                     <div class="form-body">
                         <div class="form-group">
                             <label class="control-label col-md-3">Rut</label>
                             <div class="col-md-9">
-                                <input name="rut" onblur="validaRut(this)" id="rut" placeholder="Ingrese su rut" required class="form-control" type="text">
+                                <input name="rut" id="rut" placeholder="Ingrese su rut" required class="form-control" type="text">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Nombre</label>
                             <div class="col-md-9">
-                                <input name="nombre" onfocus="this.ValidaLetras();" id="nombre" placeholder="Ingrese su nombre" required class="form-control" type="text">
+                                <input name="nombre" id="nombre" placeholder="Ingrese su nombre" required class="form-control" type="text">
                             </div>
                         </div>
                         <div class="form-group">
@@ -48,21 +50,15 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3">Correo</label>
-                            <div class="col-md-9">
-                                <input type="text" name="correo" id="correo" class="form-control"  required placeholder="Ingrese su correo"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="control-label col-md-3">Telefono contacto 1</label>
                             <div class="col-md-9">
-                                <input type="text" name="contacto1" id="correo" class="form-control"  required placeholder="Ingrese telefono"/>
+                                <input type="text" name="contacto1" id="contacto1" class="form-control"  required placeholder="Ingrese telefono"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Telefono contacto 2</label>
                             <div class="col-md-9">
-                                <input type="text" name="contacto2" id="correo" class="form-control"  required placeholder="Ingrese telefono"/>
+                                <input type="text" name="contacto2" id="contacto2" class="form-control"  required placeholder="Ingrese telefono"/>
                             </div>
                         </div>
                     </div>
@@ -70,7 +66,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="button" id="btnSave" onclick="confirmar_2()" class="btn btn-default">Actualizar</button>
+                <button type="button" id="btnSave" onclick="ConfirmaDatos()" class="btn btn-primary">Actualizar</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

@@ -27,7 +27,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-3">Nombre direccion</label>
                             <div class="col-md-9">
-                                <input name="nombre" id="nombre" placeholder="Ingrese nombre para direccion" required class="form-control" type="text">
+                                <input name="nombre" id="nombre" placeholder="Ingrese nombre para direccion ej: Casa" required class="form-control" type="text">
                             </div>
                         </div>
                         <div class="form-group">
@@ -59,7 +59,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="button" id="btnSave" onclick="confirmar_2()" class="btn btn-default">Actualizar</button>
+                <button type="button" id="btnSave" onclick="confirmar_2()" class="btn btn-primary">Actualizar</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
