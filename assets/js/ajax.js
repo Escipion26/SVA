@@ -92,4 +92,87 @@ function insertdireccion(){
         });
 }
 
+function InsertarDireccion(){
+    
+    $base = $('#base').val();
+    $nombre_direccion = $('#nom').val();
+    $direccion = $('#dir').val();
+    $region = $('#regiones_insert').val();
+    $provincia = $('#provincias_insert').val();
+    $comuna = $('#comunas_insert').val();
+    $.ajax({
+                    dataType:   "json",
+                    data    :   {   "nombre_direccion"  : $nombre_direccion,
+                                    "direccion"     : $direccion,
+                                    "region"     : $region,
+                                    "provincia" : $provincia,
+                                    "comuna" : $comuna
+                                },
+                    url     :   ""+$base+"index.php/Account/InsertarDireccion",
+                    type    :   'post',
+                    beforeSend: function(){
+                            //Lo que se haceestan  antes de enviar el formulario
+                            //$("#razon_social").html("Cargando...");
+                    },
+                    success: function(respuesta){
+                            //lo que se si el destino devuelve algo
+                            if(!respuesta.resp){
+                                bootbox.alert(respuesta.mensaje);
+                            }else{
+                              
+                                bootbox.alert(respuesta.mensaje, function() {
+                                    window.location.reload(true);
+                                });
+                            }
+                            //window.location.reload(true);
+                    },
+                    error: function(xhr,err){ 
+                            alert("readyState: "+xhr.readyState+"\nstatus: "+xhr.status+"\n \n responseText: "+xhr.responseText);
+                    }
+            });
+}
+
+function ActualizarDireccion(){
+    $base = $('#base').val();
+    $id_direccion = $('#id_direccion').val();
+    $nombre_direccion = $('#nombre').val();
+    $direccion = $('#direccion').val();
+    $region = $('#regiones').val();
+    $provincia = $('#provincia').val();
+    $comuna = $('#comuna').val();
+    $.ajax({
+                    dataType:   "json",
+                    data    :   {   
+                                    "id_direccion"  : $id_direccion,
+                                    "nombre_direccion"  : $nombre_direccion,
+                                    "direccion"     : $direccion,
+                                    "region"     : $region,
+                                    "provincia" : $provincia,
+                                    "comuna" : $comuna
+                                },
+                    url     :   ""+$base+"index.php/Account/ActualizarDireccion",
+                    type    :   'post',
+                    beforeSend: function(){
+                            //Lo que se haceestan  antes de enviar el formulario
+                            //$("#razon_social").html("Cargando...");
+                    },
+                    success: function(respuesta){
+                            //lo que se si el destino devuelve algo
+                            if(!respuesta.resp){
+                                bootbox.alert(respuesta.mensaje);
+                            }else{
+                              
+                                bootbox.alert(respuesta.mensaje, function() {
+                                    window.location.reload(true);
+                                });
+                            }
+                            //window.location.reload(true);
+                    },
+                    error: function(xhr,err){ 
+                            alert("readyState: "+xhr.readyState+"\nstatus: "+xhr.status+"\n \n responseText: "+xhr.responseText);
+                    }
+            });
+}
+
+
 

@@ -90,7 +90,7 @@ class Account extends MY_controller {
 
         if ($datos) {
 
-            $rut = ($datos->cli_rut == null) ? ' ' : $datos->cli_rut;
+            $rut = ($datos->cli_rut == null) ? ' ' : $this->recursos->DevuelveRut($datos->cli_rut);
             $nombre = ($datos->cli_nombre == null) ? ' ' : $datos->cli_nombre;
             $apellido = ($datos->cli_apellido == null) ? ' ' : $datos->cli_apellido;
             $fono1 = ($datos->cli_fono1 == null) ? ' ' : $datos->cli_fono1;
@@ -99,7 +99,7 @@ class Account extends MY_controller {
             $cadena .= "<table class='table table-bordered table-responsive'>";
             $cadena .= "<tr>";
             $cadena .= "<td class='active col-lg-5 col-md-5 col-sm-5 col-xs-5'>Rut</td>";
-            $cadena .= "<td>" . $this->recursos->DevuelveRut($rut) . "</td>";
+            $cadena .= "<td>" . $rut . "</td>";
             $cadena .= "</tr>";
             $cadena .= "<tr>";
             $cadena .= "<td class='active'>Nombre</td>";
@@ -373,5 +373,112 @@ class Account extends MY_controller {
             return false;
         }
     }
+    
+    public function InsertarDireccion(){ //funcion para insertar nueva direccion
+        
+        $id_cliente = $this->session->userdata('id_cliente');
+        $nombre_direccion = $this->input->post('nombre_direccion');
+        $direccion = $this->input->post('direccion');
+        $region = $this->input->post('region');
+        $provincia = $this->input->post('provincia');
+        $comuna = $this->input->post('comuna');
+        
+        $this->form_validation->set_rules('nombre_direccion', 'Nombre direccion', 'trim|required');
+        $this->form_validation->set_rules('direccion', 'Direccion', 'trim|required');
+        $this->form_validation->set_rules('region', 'Region', 'required|callback_region_check');
+        $this->form_validation->set_rules('provincia', 'Provincia', 'callback_provincia_check');
+        $this->form_validation->set_rules('comuna', 'Comuna', 'callback_comuna_check');
+        
+        $this->form_validation->set_message('required', 'El campo %s es obligatorio');
+        
+        if($this->form_validation->run() == FALSE){
+            $data['resp'] = FALSE;
+            $data['mensaje'] = validation_errors();
+            echo json_encode($data);
+        }else{
+            
+            $dato = $this->account_model->Insertar_direccion($id_cliente,$nombre_direccion,$direccion,$region,$provincia,$comuna);
+            
+            if($dato){
+                $data['resp'] = TRUE;
+                $data['mensaje'] = 'Dirección guardada correctamente';
+                echo json_encode($data);
+            }else{
+                $data['resp'] = FALSE;
+                $data['mensaje'] = 'Error al guardar dirección';
+                echo json_encode($data);
+            }
+            
+        }
+       
+        
+        
+    }
+    
+    function region_check($region) { //funcion para validacion del campo monto_boleta. FORM VALIDATION
+        if ($region > 0) {
+            return TRUE;
+        } else {
+            $this->form_validation->set_message('region_check', 'Seleccione %s');
+            return false;
+        }
+    }
+    
+    function provincia_check($region) { //funcion para validacion del campo monto_boleta. FORM VALIDATION
+        if ($region > 0) {
+            return TRUE;
+        } else {
+            $this->form_validation->set_message('provincia_check', 'Seleccione %s');
+            return false;
+        }
+    }
+    
+    function comuna_check($region) { //funcion para validacion del campo monto_boleta. FORM VALIDATION
+        if ($region > 0) {
+            return TRUE;
+        } else {
+            $this->form_validation->set_message('comuna_check', 'Seleccione %s');
+            return false;
+        }
+    }
+    
+    public function ActualizarDireccion(){
+        
+        $id_cliente = $this->session->userdata('id_cliente');
+        $id_direccion = $this->input->post('id_direccion');
+        $nombre = $this->input->post('nombre_direccion');
+        $direccion = $this->input->post('direccion');
+        $region = $this->input->post('region');
+        $provincia = $this->input->post('provincia');
+        $comuna = $this->input->post('comuna');
+        
+        $this->form_validation->set_rules('nombre_direccion', 'Nombre direccion', 'trim|required');
+        $this->form_validation->set_rules('direccion', 'Direccion', 'trim|required');
+        $this->form_validation->set_rules('region', 'Region', 'required|callback_region_check');
+        $this->form_validation->set_rules('provincia', 'Provincia', 'callback_provincia_check');
+        $this->form_validation->set_rules('comuna', 'Comuna', 'callback_comuna_check');
+        
+        $this->form_validation->set_message('required', 'El campo %s es obligatorio');
+        
+        if($this->form_validation->run() == FALSE){
+            $data['resp'] = FALSE;
+            $data['mensaje'] = validation_errors();
+            echo json_encode($data);
+        }else{
+            $dato = $this->account_model->ActualizarDireccion($id_cliente,$id_direccion,$nombre,$direccion,$region,$provincia,$comuna);
+            
+            if($dato){
+                $data['resp'] = TRUE;
+                $data['mensaje'] = 'Dirección actualizada correctamente';
+                echo json_encode($data);
+            }else{
+                $data['resp'] = FALSE;
+                $data['mensaje'] = 'Error al actualizar dirección';
+                echo json_encode($data);
+            }
+        }
+        
+    }
+    
 
 }

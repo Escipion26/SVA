@@ -73,9 +73,6 @@
             </div>
             <div class="modal-body form">
                 <form action="#" id="form" class="form-horizontal">
-                    <input type="hidden" name="base" id="base" value="<?php echo base_url(); ?>">
-                    <input type="hidden" name="id_cliente" id="id_cliente" value="">
-
                     <div class="form-body">
                         <div class="form-group">
                             <label class="control-label col-md-3">Nombre direccion</label>
@@ -86,7 +83,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-3">Direccion</label>
                             <div class="col-md-9">
-                                <input type="text" name="dir" id="direccion" class="form-control"  required placeholder="Ingrese direccion"/>
+                                <input type="text" name="dir" id="dir" class="form-control"  required placeholder="Ingrese direccion"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -101,7 +98,7 @@
                             <label class="control-label col-md-3">Seleccione Provincia</label>
                             <div class="col-md-9">
                                 <select id="provincias_insert" name="provincia">
-                                    
+                                    <option value='0'>------Seleccione provincia------</option>
                                 </select>
                             </div>
                         </div>
@@ -109,7 +106,7 @@
                             <label class="control-label col-md-3">Seleccione comuna</label>
                             <div class="col-md-9">
                                  <select id="comunas_insert" name="comuna">
-                                    
+                                     <option value='0'>------Seleccione provincia------</option>
                                 </select>
                             </div>
                         </div>

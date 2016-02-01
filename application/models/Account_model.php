@@ -184,5 +184,49 @@ Class Account_model extends CI_Model {
         return $query->num_rows();
         
     }
+    
+    
+    public function Insertar_direccion($id_cliente,$nombre_direccion,$direccion,$region,$provincia,$comuna){
+        
+        $data = array( 
+            'tab_clientes_idtab_clientes' => $id_cliente,
+            'dir_nombre' => $nombre_direccion,
+            'dir_direccion' => $direccion,
+            'tab_region_idtab_region' =>$region,
+            'tab_provincia_idtab_provincia' =>$provincia,
+            'tab_comuna_idtab_comuna' =>$comuna
+        );
+
+        $query = $this->db->insert('tab_direcciones', $data);
+        
+        if($query){
+            return TRUE;
+        }  else {
+            return FALSE;
+        }
+        
+        
+    }
+    
+    
+    public function ActualizarDireccion($id_cliente,$id_direccion,$nombre,$direccion,$region,$provincia,$comuna){
+        $arr = array(
+            'dir_nombre' => $nombre,
+            'dir_direccion'   => $direccion,
+            'tab_region_idtab_region' => $region,
+            'tab_provincia_idtab_provincia' => $provincia,
+            'tab_comuna_idtab_comuna' => $comuna
+        );
+        
+        $ok = $this->db->update('tab_direcciones', $arr,array('tab_clientes_idtab_clientes' => $id_cliente,
+                                                              'idtab_direcciones' => $id_direccion  
+                                                             ));
+        if($ok){
+            return TRUE;
+        }else{
+            return FALSE;
+        }
+        
+    }
 
 }
