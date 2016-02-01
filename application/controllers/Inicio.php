@@ -60,8 +60,7 @@ class Inicio extends MY_controller {
     
     public function carga_recomendado(){ //funcion que trae rutas de imagenes para recomendados inicio
         
-        $recomendado1_inicio = "<div class='item active'>";
-        $recomendado2_inicio = "<div class='item'>";
+       
         $tag_final = "</div>";
         $cadena ="";
         
@@ -70,13 +69,7 @@ class Inicio extends MY_controller {
         
         if($menu){
             foreach ($menu as $foto) {
-                if($cont==0){ //las primeras 3 fotos con class active para que funcione
-                    $cadena .= $recomendado1_inicio;
-                }elseif($cont == 3){ // pas proximas sin class active
-                    $cadena .= $tag_final;
-                    $cadena .= $recomendado2_inicio;
-                }
-                $cadena .="<div class = 'col-sm-4 col-sx-4'>";
+                $cadena .="<div class='col-sm-4'>";
                     $cadena .="<div class = 'product-image-wrapper'>";
                         $cadena .="<div class = 'single-products'>";
                             $cadena .="<div class = 'productinfo text-center'>";
@@ -88,7 +81,6 @@ class Inicio extends MY_controller {
                         $cadena .="</div>";
                     $cadena .="</div>";
                 $cadena .="</div>";
-                $cont = $cont + 1;
             }
             $cadena .= $tag_final;
         }
