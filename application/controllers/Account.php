@@ -19,6 +19,12 @@ class Account extends MY_controller {
             $this->Plantilla("cuenta", $data);
         }
     }
+    
+    public function configuracion() {
+
+        $data['menu'] = $this->menu_cuenta();
+        $this->Plantilla('configuracion', $data);
+    }
 
     public function menu_cuenta() {
         $cadena = "";
@@ -36,7 +42,6 @@ class Account extends MY_controller {
     }
 
     public function ActualizaDatos() { //Actualiza datos personales. Datos enviados de modal
-
         $id_cliente = $this->input->post('id_cliente');
         $rut = $this->input->post('rut');
         $nombre = $this->input->post('nombre');
@@ -66,18 +71,16 @@ class Account extends MY_controller {
             $datos = $this->account_model->ActualizarDatos(
                     $id_cliente, $this->recursos->FormatoRut($rut), $nombre, $apellido, $contacto1, $contacto2
             );
-            
-            if($datos){
+
+            if ($datos) {
                 $data['resp'] = TRUE;
                 $data['mensaje'] = "Su datos fueron actualizados correctamente";
                 echo json_encode($data);
-            }  else {
+            } else {
                 $data['resp'] = FALSE;
                 $data['mensaje'] = "Error al actualizar los datos";
                 echo json_encode($data);
             }
-            
-            
         }
     }
 
@@ -160,10 +163,10 @@ class Account extends MY_controller {
                 $cadena .= "<td>" . $row->com_nombre . "</td>";
                 $cadena .= "<input type='hidden' id='id_provincia' value=''>";
                 $cadena .= "<td><button type='button' data-target='#EditarModal' onclick='ObtieneDireccion(" . $row->idtab_direcciones . ")' data-toggle='modal' class='btn btn-success pull-right'>Modificar</button></td>";
-                if($cuenta > 1){
+                if ($cuenta > 1) {
                     $cadena .= "<td><button type='button' onclick='EliminarDireccion(" . $row->idtab_direcciones . ")' class='btn btn-danger pull-left' id='eliminar'>Eliminar</button></td>";
                 }
-                
+
                 $cadena .= "</tr>";
             }
 
@@ -191,19 +194,18 @@ class Account extends MY_controller {
 
         echo json_encode($arr);
     }
-    
-    
-    public function regiones_insert(){ //para llenar select al insertar nueva direccion
-        $cadena = ''; 
+
+    public function regiones_insert() { //para llenar select al insertar nueva direccion
+        $cadena = '';
         $dato = $this->account_model->traer_regiones();
-         
-        foreach ($dato as $row){
-           $cadena .="<option value='" . $row->idtab_region . "'>" . $row->reg_nombre . "</option>"; 
+
+        foreach ($dato as $row) {
+            $cadena .="<option value='" . $row->idtab_region . "'>" . $row->reg_nombre . "</option>";
         }
-        
-        
+
+
         $data['regiones'] = $cadena;
-        
+
         echo json_encode($data);
     }
 
@@ -373,48 +375,43 @@ class Account extends MY_controller {
             return false;
         }
     }
-    
-    public function InsertarDireccion(){ //funcion para insertar nueva direccion
-        
+
+    public function InsertarDireccion() { //funcion para insertar nueva direccion
         $id_cliente = $this->session->userdata('id_cliente');
         $nombre_direccion = $this->input->post('nombre_direccion');
         $direccion = $this->input->post('direccion');
         $region = $this->input->post('region');
         $provincia = $this->input->post('provincia');
         $comuna = $this->input->post('comuna');
-        
+
         $this->form_validation->set_rules('nombre_direccion', 'Nombre direccion', 'trim|required');
         $this->form_validation->set_rules('direccion', 'Direccion', 'trim|required');
         $this->form_validation->set_rules('region', 'Region', 'required|callback_region_check');
         $this->form_validation->set_rules('provincia', 'Provincia', 'callback_provincia_check');
         $this->form_validation->set_rules('comuna', 'Comuna', 'callback_comuna_check');
-        
+
         $this->form_validation->set_message('required', 'El campo %s es obligatorio');
-        
-        if($this->form_validation->run() == FALSE){
+
+        if ($this->form_validation->run() == FALSE) {
             $data['resp'] = FALSE;
             $data['mensaje'] = validation_errors();
             echo json_encode($data);
-        }else{
-            
-            $dato = $this->account_model->Insertar_direccion($id_cliente,$nombre_direccion,$direccion,$region,$provincia,$comuna);
-            
-            if($dato){
+        } else {
+
+            $dato = $this->account_model->Insertar_direccion($id_cliente, $nombre_direccion, $direccion, $region, $provincia, $comuna);
+
+            if ($dato) {
                 $data['resp'] = TRUE;
                 $data['mensaje'] = 'Dirección guardada correctamente';
                 echo json_encode($data);
-            }else{
+            } else {
                 $data['resp'] = FALSE;
                 $data['mensaje'] = 'Error al guardar dirección';
                 echo json_encode($data);
             }
-            
         }
-       
-        
-        
     }
-    
+
     function region_check($region) { //funcion para validacion del campo monto_boleta. FORM VALIDATION
         if ($region > 0) {
             return TRUE;
@@ -423,7 +420,7 @@ class Account extends MY_controller {
             return false;
         }
     }
-    
+
     function provincia_check($region) { //funcion para validacion del campo monto_boleta. FORM VALIDATION
         if ($region > 0) {
             return TRUE;
@@ -432,7 +429,7 @@ class Account extends MY_controller {
             return false;
         }
     }
-    
+
     function comuna_check($region) { //funcion para validacion del campo monto_boleta. FORM VALIDATION
         if ($region > 0) {
             return TRUE;
@@ -441,9 +438,9 @@ class Account extends MY_controller {
             return false;
         }
     }
-    
-    public function ActualizarDireccion(){
-        
+
+    public function ActualizarDireccion() {
+
         $id_cliente = $this->session->userdata('id_cliente');
         $id_direccion = $this->input->post('id_direccion');
         $nombre = $this->input->post('nombre_direccion');
@@ -451,136 +448,133 @@ class Account extends MY_controller {
         $region = $this->input->post('region');
         $provincia = $this->input->post('provincia');
         $comuna = $this->input->post('comuna');
-        
+
         $this->form_validation->set_rules('nombre_direccion', 'Nombre direccion', 'trim|required');
         $this->form_validation->set_rules('direccion', 'Direccion', 'trim|required');
         $this->form_validation->set_rules('region', 'Region', 'required|callback_region_check');
         $this->form_validation->set_rules('provincia', 'Provincia', 'callback_provincia_check');
         $this->form_validation->set_rules('comuna', 'Comuna', 'callback_comuna_check');
-        
+
         $this->form_validation->set_message('required', 'El campo %s es obligatorio');
-        
-        if($this->form_validation->run() == FALSE){
+
+        if ($this->form_validation->run() == FALSE) {
             $data['resp'] = FALSE;
             $data['mensaje'] = validation_errors();
             echo json_encode($data);
-        }else{
-            $dato = $this->account_model->ActualizarDireccion($id_cliente,$id_direccion,$nombre,$direccion,$region,$provincia,$comuna);
-            
-            if($dato){
+        } else {
+            $dato = $this->account_model->ActualizarDireccion($id_cliente, $id_direccion, $nombre, $direccion, $region, $provincia, $comuna);
+
+            if ($dato) {
                 $data['resp'] = TRUE;
                 $data['mensaje'] = 'Dirección actualizada correctamente';
                 echo json_encode($data);
-            }else{
+            } else {
                 $data['resp'] = FALSE;
                 $data['mensaje'] = 'Error al actualizar dirección';
                 echo json_encode($data);
             }
         }
-        
     }
-    
-    public  function configuracion(){
-        
-        $data['menu'] = $this->menu_cuenta();
-        $this->Plantilla('configuracion', $data);
-        
-    } 
-    
-    
-    public function ActualizarCorreo(){
-        
+
+    public function ActualizarCorreo() {
+
         $email = $this->input->post('email');
         $pass = sha1(md5($this->input->post('pass')));
-        
+
         $this->form_validation->set_rules('email', 'Correo electronico', 'trim|required|valid_email|is_unique[tab_clientes.cli_correo]');
         $this->form_validation->set_rules('pass', 'Contraseña', 'trim|required|min_length[5]|alpha_numeric');
-        
+
         $this->form_validation->set_message('required', 'El campo %s es obligatorio');
         $this->form_validation->set_message('valid_email', 'El campo %s es incorrecto');
         $this->form_validation->set_message('is_unique', 'Este email ya esta siendo usado');
         $this->form_validation->set_message('min_length', 'El campo %s debe tener minimo 5 caracteres');
         $this->form_validation->set_message('alpha_numeric', 'El campo %s solo debe tener letras y/o numeros');
-        
-        if($this->form_validation->run() == FALSE){
+
+        if ($this->form_validation->run() == FALSE) {
             $data['resp'] = FALSE;
             $data['mensaje'] = validation_errors();
             echo json_encode($data);
-        }else{
-            
-            if($pass == $this->session->userdata('password')){ //si la contraseña original es correcta
-                
+        } else {
+
+            if ($pass == $this->session->userdata('password')) { //si la contraseña original es correcta
                 $id = $this->session->userdata('id_cliente');
                 $query = $this->account_model->ActualizarCorreo($email, $id);
-                
-                if($query){
+
+                if ($query) {
                     $data['resp'] = True;
                     $data['mensaje'] = 'Correo actualizado correctamente';
-                    $this->session->set_userdata('correo',$email);
+                    $this->session->set_userdata('correo', $email);
                     echo json_encode($data);
-                }else{
+                } else {
                     $data['resp'] = FALSE;
                     $data['mensaje'] = 'Correo NO pudo ser actualizado';
                     echo json_encode($data);
                 }
-                
-                
-            }else{ //si la contraseña no es correcta
+            } else { //si la contraseña no es correcta
                 $data['resp'] = FALSE;
                 $data['mensaje'] = 'Contraseña incorrecta';
                 echo json_encode($data);
             }
-            
         }
-        
-        
     }
-    
-    public function ActualizarContra(){
+
+    public function ActualizarContra() {
         $pass1 = $this->input->post('pass1'); //password original
         $pass2 = $this->input->post('pass2');
         $pass3 = $this->input->post('pass3');
-        
+
         $this->form_validation->set_rules('pass1', 'Contraseña actual', 'trim|required|min_length[5]');
         $this->form_validation->set_rules('pass2', 'Nueva contraseña', 'trim|required|min_length[5]|alpha_numeric|matches[pass3]');
         $this->form_validation->set_rules('pass3', 'Reingresar contraseña', 'trim|required|min_length[5]|alpha_numeric');
-        
+
         $this->form_validation->set_message('required', 'El campo %s es obligatorio');
         $this->form_validation->set_message('min_length', 'El campo %s debe tener minimo 5 caracteres');
         $this->form_validation->set_message('alpha_numeric', 'El campo %s solo debe tener letras y/o numeros');
         $this->form_validation->set_message('matches', 'Los campos de su nueva contraseña deben coincidir');
-        
-        if($this->form_validation->run() == FALSE){
+
+        if ($this->form_validation->run() == FALSE) {
             $data['resp'] = FALSE;
             $data['mensaje'] = validation_errors();
             echo json_encode($data);
-        }else{
-            if(sha1(md5($pass1)) == $this->session->userdata('password')){ //si la contraseña original es correcta
-                
+        } else {
+            if (sha1(md5($pass1)) == $this->session->userdata('password')) { //si la contraseña original es correcta
                 $id = $this->session->userdata('id_cliente');
                 $query = $this->account_model->ActualizarContraseña(sha1(md5($pass2)), $id);
-                
-                if($query){
+
+                if ($query) {
                     $data['resp'] = True;
                     $data['mensaje'] = 'Contraseña actualizada correctamente';
-                    $this->session->set_userdata('contraseña',$pass2);
+                    $this->session->set_userdata('contraseña', $pass2);
                     echo json_encode($data);
-                }else{
+                } else {
                     $data['resp'] = FALSE;
                     $data['mensaje'] = 'Contraseña NO pudo ser actualizada';
                     echo json_encode($data);
                 }
-                
-                
-            }else{ //si la contraseña no es correcta
+            } else { //si la contraseña no es correcta
                 $data['resp'] = FALSE;
                 $data['mensaje'] = 'Contraseña incorrecta';
                 echo json_encode($data);
             }
-            
         }
-        
-        
+    }
+
+    public function EliminarDireccion() {
+
+        $id_cliente = $this->session->userdata('id_cliente');
+        $idd = $this->input->post('idd');
+
+        $query = $this->account_model->EliminaDireccion($id_cliente, $idd);
+
+        if ($query) {
+            $data['resp'] = True;
+            $data['mensaje'] = 'Dirección eliminada correctamente';
+            echo json_encode($data);
+        } else {
+            $data['resp'] = FALSE;
+            $data['mensaje'] = 'No se pudo eliminar dirección';
+            echo json_encode($data);
+        }
     }
 
 }

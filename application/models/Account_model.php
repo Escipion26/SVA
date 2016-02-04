@@ -259,5 +259,20 @@ Class Account_model extends CI_Model {
         
         
     }
+    
+    
+    public function EliminaDireccion($id_cliente, $idd) {
+        
+        $this->db->where('idtab_direcciones',$idd);
+        $this->db->where('tab_clientes_idtab_clientes',$id_cliente);
+        
+        $ok = $this->db->delete('tab_direcciones');
+        
+        if($ok){
+            return TRUE;
+        }else{
+            return FALSE;
+        }
+    }
 
 }

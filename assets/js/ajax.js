@@ -244,6 +244,49 @@ function ActualizarContraseña(){
     });
 }
 
+function EliminaDireccion(IdDireccion){
+    $idd = IdDireccion;
+    $base = $('#base').val();
+    
+    $.ajax({
+        dataType: "json",
+        data: {
+            "idd": $idd
+        },
+         url: "" + $base + "index.php/Account/EliminarDireccion",
+        type: 'post',
+        beforeSend: function () {
+            //Lo que se haceestan  antes de enviar el formulario
+            //$("#razon_social").html("Cargando...");
+        },
+        success: function (respuesta) {
+            //lo que se si el destino devuelve algo
+            if (!respuesta.resp) {
+                bootbox.alert(respuesta.mensaje);
+            } else {
+                bootbox.alert(respuesta.mensaje, function () {
+                    window.location.reload(true);
+                });
+            }
+            //window.location.reload(true);
+        },
+        error: function (xhr, err) {
+            bootbox.alert("readyState: " + xhr.readyState + "\nstatus: " + xhr.status + "\n \n responseText: " + xhr.responseText);
+        }
+        
+    });
+    
+}
+
+function EliminarDireccion(IdDireccion){
+    bootbox.confirm("¿Esta Seguro que desea eliminar esta dirección?", function (result) {
+        if (result) {
+            EliminaDireccion(IdDireccion);
+            true;
+        }
+    });
+}
+
 function confirmar_2() {
     bootbox.confirm("¿Esta Seguro de actualizar esta direccion?", function (result) {
         if (result) {
