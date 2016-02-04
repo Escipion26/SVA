@@ -3,7 +3,7 @@
         <div class="col-lg-12">
             <?php echo $menu; ?>
         </div>
-        <div class='col-lg-6 col-lg-offset-3' style='margin-bottom: 100px;'>
+        <div class='col-lg-6 col-md-6 col-sm-6 col-md-offset-3 col-sm-offset-3  col-lg-offset-3' style='margin-bottom: 100px;'>
             <div class='panel panel-default'>
                 <div class='panel-heading'>DATOS PERSONALES</div>
                 <div class="panel-body">

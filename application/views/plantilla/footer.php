@@ -44,35 +44,6 @@
     </div>
 
 </footer><!--/Footer-->
-
-<script>
-    
-    function confirmar_2(){
-        bootbox.confirm("¿Esta Seguro de actualizar esta direccion?", function (result) {
-        if(result){
-            ActualizarDireccion();
-            true;
-        }
-    });
-    }
-    
-    function ConfirmaDatos(){
-        bootbox.confirm("¿Esta Seguro de actualizar los datos?", function (result) {
-        if(result){
-            ActualizaDatos();
-            true;
-        }
-    });
-    }
-    function ConfirmarInsertar(){
-        bootbox.confirm("¿Esta Seguro de guardar esta dirección?", function (result) {
-        if(result){
-            InsertarDireccion();
-            true;
-        }
-    });
-    }
-</script>
 <script>
     $(document).ready(function () {
         if ($("div#mensaje")) {

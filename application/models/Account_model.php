@@ -228,5 +228,36 @@ Class Account_model extends CI_Model {
         }
         
     }
+    
+    
+    public function ActualizarCorreo($email, $id){
+        $arr = array(
+            'cli_correo' => $email
+        );
+        
+        $ok = $this->db->update('tab_clientes', $arr, array('idtab_clientes' =>$id));
+        
+        if($ok){
+            return TRUE;
+        }else{
+            return FALSE;
+        }
+    }
+    
+    public function ActualizarContraseña($pass1, $id){
+        $arr = array(
+            'log_pass' => $pass1
+        );
+        
+        $ok = $this->db->update('tab_login', $arr, array('tab_clientes_idtab_clientes' =>$id));
+        
+        if($ok){
+            return TRUE;
+        }else{
+            return FALSE;
+        }
+        
+        
+    }
 
 }

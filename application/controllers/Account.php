@@ -28,7 +28,7 @@ class Account extends MY_controller {
         $cadena .= "<li><a  href='" . base_url() . "index.php/informacion-personal'>Datos personales</a></li>";
         $cadena .= "<li><a  href='" . base_url() . "index.php/direccion-despacho'>Direccion despacho</a></li>";
         $cadena .= "<li><a  href='#'>Estado pedidos</a></li>";
-        $cadena .= "<li><a  href='#'>Configuracion cuenta</a></li>";
+        $cadena .= "<li><a  href='" . base_url() . "index.php/configuracion-cuenta'>Configuracion cuenta</a></li>";
         $cadena .= "</ul>";
         $cadena .="</div>";
 
@@ -148,7 +148,7 @@ class Account extends MY_controller {
             $cadena .= "<td class='active'>Region</td>";
             $cadena .= "<td class='active'>Provincia</td>";
             $cadena .= "<td class='active'>Comuna</td>";
-            $cadena .= "<td class='text-center' colspan='2'>Accion</td>";
+            $cadena .= "<td class='text-center active' colspan='2'>Opciones</td>";
             $cadena .= "</tr>";
 
             foreach ($datos as $row) {
@@ -480,5 +480,107 @@ class Account extends MY_controller {
         
     }
     
+    public  function configuracion(){
+        
+        $data['menu'] = $this->menu_cuenta();
+        $this->Plantilla('configuracion', $data);
+        
+    } 
+    
+    
+    public function ActualizarCorreo(){
+        
+        $email = $this->input->post('email');
+        $pass = sha1(md5($this->input->post('pass')));
+        
+        $this->form_validation->set_rules('email', 'Correo electronico', 'trim|required|valid_email|is_unique[tab_clientes.cli_correo]');
+        $this->form_validation->set_rules('pass', 'Contraseña', 'trim|required|min_length[5]|alpha_numeric');
+        
+        $this->form_validation->set_message('required', 'El campo %s es obligatorio');
+        $this->form_validation->set_message('valid_email', 'El campo %s es incorrecto');
+        $this->form_validation->set_message('is_unique', 'Este email ya esta siendo usado');
+        $this->form_validation->set_message('min_length', 'El campo %s debe tener minimo 5 caracteres');
+        $this->form_validation->set_message('alpha_numeric', 'El campo %s solo debe tener letras y/o numeros');
+        
+        if($this->form_validation->run() == FALSE){
+            $data['resp'] = FALSE;
+            $data['mensaje'] = validation_errors();
+            echo json_encode($data);
+        }else{
+            
+            if($pass == $this->session->userdata('password')){ //si la contraseña original es correcta
+                
+                $id = $this->session->userdata('id_cliente');
+                $query = $this->account_model->ActualizarCorreo($email, $id);
+                
+                if($query){
+                    $data['resp'] = True;
+                    $data['mensaje'] = 'Correo actualizado correctamente';
+                    $this->session->set_userdata('correo',$email);
+                    echo json_encode($data);
+                }else{
+                    $data['resp'] = FALSE;
+                    $data['mensaje'] = 'Correo NO pudo ser actualizado';
+                    echo json_encode($data);
+                }
+                
+                
+            }else{ //si la contraseña no es correcta
+                $data['resp'] = FALSE;
+                $data['mensaje'] = 'Contraseña incorrecta';
+                echo json_encode($data);
+            }
+            
+        }
+        
+        
+    }
+    
+    public function ActualizarContra(){
+        $pass1 = $this->input->post('pass1'); //password original
+        $pass2 = $this->input->post('pass2');
+        $pass3 = $this->input->post('pass3');
+        
+        $this->form_validation->set_rules('pass1', 'Contraseña actual', 'trim|required|min_length[5]');
+        $this->form_validation->set_rules('pass2', 'Nueva contraseña', 'trim|required|min_length[5]|alpha_numeric|matches[pass3]');
+        $this->form_validation->set_rules('pass3', 'Reingresar contraseña', 'trim|required|min_length[5]|alpha_numeric');
+        
+        $this->form_validation->set_message('required', 'El campo %s es obligatorio');
+        $this->form_validation->set_message('min_length', 'El campo %s debe tener minimo 5 caracteres');
+        $this->form_validation->set_message('alpha_numeric', 'El campo %s solo debe tener letras y/o numeros');
+        $this->form_validation->set_message('matches', 'Los campos de su nueva contraseña deben coincidir');
+        
+        if($this->form_validation->run() == FALSE){
+            $data['resp'] = FALSE;
+            $data['mensaje'] = validation_errors();
+            echo json_encode($data);
+        }else{
+            if(sha1(md5($pass1)) == $this->session->userdata('password')){ //si la contraseña original es correcta
+                
+                $id = $this->session->userdata('id_cliente');
+                $query = $this->account_model->ActualizarContraseña(sha1(md5($pass2)), $id);
+                
+                if($query){
+                    $data['resp'] = True;
+                    $data['mensaje'] = 'Contraseña actualizada correctamente';
+                    $this->session->set_userdata('contraseña',$pass2);
+                    echo json_encode($data);
+                }else{
+                    $data['resp'] = FALSE;
+                    $data['mensaje'] = 'Contraseña NO pudo ser actualizada';
+                    echo json_encode($data);
+                }
+                
+                
+            }else{ //si la contraseña no es correcta
+                $data['resp'] = FALSE;
+                $data['mensaje'] = 'Contraseña incorrecta';
+                echo json_encode($data);
+            }
+            
+        }
+        
+        
+    }
 
 }

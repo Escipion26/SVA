@@ -55,3 +55,4 @@ $route['translate_uri_dashes'] = FALSE;
 $route['panel-usuario'] = "Account";
 $route['informacion-personal'] = 'Account/datos_personales';
 $route['direccion-despacho'] = 'Account/direcciones';
+$route['configuracion-cuenta'] = 'Account/configuracion';
