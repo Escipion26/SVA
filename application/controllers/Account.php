@@ -53,8 +53,8 @@ class Account extends MY_controller {
         $this->form_validation->set_rules('rut', 'Rut', 'trim|required|callback_validaRut_check|max_length[10]');
         $this->form_validation->set_rules('nombre', 'Nombre', 'trim|required');
         $this->form_validation->set_rules('apellido', 'Apellido', 'trim|required');
-        $this->form_validation->set_rules('contacto1', 'Contacto 1', 'trim|required|numeric|min_length[8]');
-        $this->form_validation->set_rules('contacto2', 'Contacto 2', 'trim|numeric');
+        $this->form_validation->set_rules('contacto1', 'Contacto 1', 'trim|required|numeric|min_length[8]|max_length[9]');
+        $this->form_validation->set_rules('contacto2', 'Contacto 2', 'trim|numeric|min_length[8]|max_length[9]');
 
         $this->form_validation->set_message('required', 'El campo %s es obligatorio');
         $this->form_validation->set_message('numeric', 'El campo %s debe contener solo numeros');
