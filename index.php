@@ -53,7 +53,25 @@
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+if($_SERVER['SERVER_NAME']){
+	switch ($_SERVER['SERVER_NAME']) {
+		case 'localhost':
+			define('ENVIRONMENT', 'development');
+			break;
+
+		case 'www.tiendadesa.dwchile.cl':
+			define('ENVIRONMENT', 'production');
+			break;
+                case 'tiendadesa.dwchile.cl':
+			define('ENVIRONMENT', 'production');
+			break;    
+
+		default:
+			header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
+			echo 'Ocurrió un error inesperado, favor comuniquese con el administrador del sistema.';
+			exit(1);
+	}
+}
 
 /*
  *---------------------------------------------------------------
