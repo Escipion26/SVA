@@ -791,16 +791,6 @@ h2.title:before{
   margin-top:30px;
 }
 
-.well {
-  background-color: #FFFFFF;
-  border: 1px solid #F7F7F0;
-  border-radius: 4px;
-  box-shadow: none;
-  margin-bottom: 20px;
-  min-height: 20px;
-  padding: 35px;
-}
-
 
 .tooltip-inner {
   background-color: #FE980F;

@@ -60,14 +60,14 @@ class Inicio extends MY_controller {
 
         if ($menu) {
             foreach ($menu as $foto) {
-                $cadena .="<div class='col-sm-4'>";
+                $cadena .="<div class='col-sm-4 col-xs-5'>";
                 $cadena .="<div class = 'product-image-wrapper'>";
                 $cadena .="<div class = 'single-products'>";
                 $cadena .="<div class = 'productinfo text-center'>";
                 $cadena .="<img src = '" . $foto->ruta . "' alt = '' />";
                 $cadena .="<h2>$" . $foto->precio_venta . "</h2>";
                 $cadena .="<p>" . $foto->descripcion . "</p>";
-                $cadena .="<a  class = 'btn btn-default add-to-cart'><i class = 'fa fa-shopping-cart'></i>Agregar a carrito</a>";
+                $cadena .="<button onclick='DetalleProducto(".$foto->id_producto.")' data-toggle='modal' data-target='#detalle'  class = 'btn btn-success add-to'><i class = 'fa fa-shopping-cart'></i> Ver producto</button>";
                 $cadena .="</div>";
                 $cadena .="</div>";
                 $cadena .="</div>";

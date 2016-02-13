@@ -46,20 +46,18 @@
                         <div class="col-sm-8">
                             <div class="shop-menu pull-right">
                                 <ul class="nav navbar-nav">
-                                    <li><a href="<?php echo base_url(); ?>"><i class="fa fa-home"></i> Inicio</a></li>
+                                    <a href="<?php echo base_url(); ?> " class=" btn btn-primary"><i class="fa fa-home"></i> Inicio</a>
                                     <?php if ($this->session->userdata('logueado') == true) { ?>
-                                    <li><a href="<?php echo base_url()?>index.php/panel-usuario"><i class="fa fa-user"></i> Bienvenido <?php echo $this->session->userdata('nombre') ?>/ver cuenta</a></li>
+                                    <a href="<?php echo base_url()?>index.php/panel-usuario" class=" btn btn-success"><i class="fa fa-user"></i> Bienvenido <?php echo $this->session->userdata('nombre') ?>/ver cuenta</a>
                                     <?php } else { ?>
-                                        <li><a href="<?php echo base_url(); ?>index.php/login"><i class="fa fa-user"></i> Cuenta</a></li>
+                                    <a href="<?php echo base_url(); ?>index.php/login" class=" btn btn-primary"><i class="fa fa-user"></i> Cuenta</a>
                                     <?php } ?>
-<!--                                    <li><a href="#"><i class="fa fa-star"></i> Favoritos</a></li>-->
-                                    <li><a href="#"><i class="fa fa-crosshairs"></i> Chequear</a></li>
-                                    <li><a href="#"><i class="fa fa-shopping-cart"></i> Carrito</a></li>
+                                    <a href="#" class="btn btn-primary btn-default"><i class="fa fa-shopping-cart"></i> Carrito</a>
                                     <?php if (!$this->session->userdata('logueado') == true) { ?>
-                                        <li><a href="<?php echo base_url(); ?>index.php/login"><i class="fa fa-lock"></i> Registrate/Inicio sesion</a></li>
+                                        <a href="<?php echo base_url(); ?>index.php/login" class=" btn btn-primary"><i class="fa fa-lock"></i> Registrate/Inicio sesion</a>
                                     <?php } ?>
                                     <?php if ($this->session->userdata('logueado') == true) { ?>
-                                        <li><a href="<?php echo base_url(); ?>index.php/login/cerrar_sesion"><i class="fa fa-lock"></i>  Cerrar sesion</a></li>
+                                        <a href="<?php echo base_url(); ?>index.php/login/cerrar_sesion" class=" btn btn-danger"><i class="fa fa-lock"></i>  Cerrar sesion</a>
                                     <?php } ?>    
                                         
                                 </ul>

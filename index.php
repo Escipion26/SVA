@@ -61,10 +61,7 @@ if($_SERVER['SERVER_NAME']){
 
 		case 'www.tiendadesa.dwchile.cl':
 			define('ENVIRONMENT', 'production');
-			break;
-                case 'tiendadesa.dwchile.cl':
-			define('ENVIRONMENT', 'production');
-			break;    
+			break;  
 
 		default:
 			header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);

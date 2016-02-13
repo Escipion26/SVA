@@ -33,5 +33,22 @@ class Busqueda_model extends CI_Model {
         return $query->row();
         
     }
+    
+    
+    public function ver_producto($id_producto){
+        $this->db->select('tp.prod_sku,tp.prod_stock,tp.prod_precio_venta, tp.prod_nombre, tp.idtab_productos, ti.img_ruta');
+        $this->db->from('tab_productos tp, tab_imagen ti');
+        $this->db->where('tp.idtab_productos',$id_producto);
+        $this->db->where('tp.idtab_productos = tab_productos_idtab_productos');
+        $query = $this->db->get();
+        
+        if($query){
+            return $query->row();
+        }else{
+            return FALSE;
+        }
+        
+        
+    }
 
 }
