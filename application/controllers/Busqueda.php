@@ -71,8 +71,15 @@ class Busqueda extends MY_controller {
                 $cadena .= "<span>Precio $".$producto->prod_precio_venta."</span>";
                 if ($producto->prod_stock > 0) { //SI NO HAY STOCK ESCONDE EL BOTON AGREGAR A CARRITO
                     $cadena .= "</br></br><label>Cantidad: </label>";
-                    $cadena .= "<input type='text' size='4' class=''>";
-                    $cadena .= "</br></br><button type='button' class='btn btn-success'>";
+                    
+                    $cadena .="<div class='cart_quantity_button'>";
+                    $cadena .="<a class='btn fa fa-minus' onclick='disminuir()'></a>";
+                    $cadena .="<input class='cart_quantity_input' type='text' id='cantidad' value='1' disabled='true' autocomplete='off' size='2'>";
+                    $cadena .="<a class='btn fa fa-plus' onclick='aumentar()'></a>";
+                    $cadena .="</div>";
+                    
+                    ##$cadena .= "<input type='text' size='10' maxlength='3' value='1' id='cantidad'>";
+                    $cadena .= "</br></br><button onclick='Agregar(".$producto->idtab_productos.")'  type='button' class='btn btn-success'>"; //boton agregar carrito
                     $cadena .= "<i class='fa fa-shopping-cart'></i>";
                     $cadena .= "Agregar a carrito";
                     $cadena .= "</button>";
@@ -83,7 +90,6 @@ class Busqueda extends MY_controller {
                 }
                 $cadena .= "</div>";
                 $cadena .= "</div>";
-//                $cadena .= "</div>";
                 
             }else{
                 $cadena .= "No existe producto";

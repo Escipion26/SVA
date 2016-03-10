@@ -58,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('session','database','form_validation');
+$autoload['libraries'] = array('database','form_validation','cart','session');
 
 /*
 | -------------------------------------------------------------------
@@ -103,7 +103,7 @@ $autoload['config'] = array();
 | -------------------------------------------------------------------
 |  Auto-load Language files
 | -------------------------------------------------------------------
-| Prototype:
+| Prototype:session
 |
 |	$autoload['language'] = array('lang1', 'lang2');
 |

@@ -5,6 +5,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <title>Carshop</title>
+        <script src="<?php echo base_url();?>assets/js/jquery.js"></script>
         <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
         <link href="<?php echo base_url(); ?>assets/css/font-awesome.min.css" rel="stylesheet">
         <link href="<?php echo base_url(); ?>assets/css/prettyPhoto.css" rel="stylesheet">
@@ -23,9 +24,9 @@
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo base_url(); ?>assets/images/ico/apple-touch-icon-72-precomposed.png">
         <link rel="apple-touch-icon-precomposed" href="<?php echo base_url(); ?>assets/images/ico/apple-touch-icon-57-precomposed.png">
         
-        <script src="<?php echo base_url();?>assets/js/jquery.js"></script>
-        <script src="<?php echo base_url();?>assets/js/Rut.js"></script>
         <script src="<?php echo base_url();?>assets/js/neg.js"></script>
+        
+        <script src="<?php echo base_url();?>assets/js/Rut.js"></script>
         <script src="<?php echo base_url();?>assets/js/ajax.js"></script>
         <script src="<?php echo base_url();?>assets/js/bootstrap.min.js"></script>
 	<script src="<?php echo base_url();?>assets/js/jquery.scrollUp.min.js"></script>
@@ -48,11 +49,11 @@
                                 <ul class="nav navbar-nav">
                                     <a href="<?php echo base_url(); ?> " class=" btn btn-primary"><i class="fa fa-home"></i> Inicio</a>
                                     <?php if ($this->session->userdata('logueado') == true) { ?>
-                                    <a href="<?php echo base_url()?>index.php/panel-usuario" class=" btn btn-success"><i class="fa fa-user"></i> Bienvenido <?php echo $this->session->userdata('nombre') ?>/ver cuenta</a>
+                                    <a href="<?php echo base_url()?>index.php/panel-usuario" class=" btn btn-primary"><i class="fa fa-user"></i> Bienvenido <?php echo $this->session->userdata('nombre') ?>/ver cuenta</a>
                                     <?php } else { ?>
                                     <a href="<?php echo base_url(); ?>index.php/login" class=" btn btn-primary"><i class="fa fa-user"></i> Cuenta</a>
                                     <?php } ?>
-                                    <a href="#" class="btn btn-primary btn-default"><i class="fa fa-shopping-cart"></i> Carrito</a>
+                                    <a href="<?php echo base_url(); ?>index.php/trx_pro/carrito" class="btn btn-primary btn-default"><i class="fa fa-shopping-cart"></i> Carrito (<span id="total_item" ><?php echo $this->cart->total_items();?></span>)</a>
                                     <?php if (!$this->session->userdata('logueado') == true) { ?>
                                         <a href="<?php echo base_url(); ?>index.php/login" class=" btn btn-primary"><i class="fa fa-lock"></i> Registrate/Inicio sesion</a>
                                     <?php } ?>
