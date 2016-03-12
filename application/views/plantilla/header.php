@@ -53,7 +53,7 @@
                                     <?php } else { ?>
                                     <a href="<?php echo base_url(); ?>index.php/login" class=" btn btn-primary"><i class="fa fa-user"></i> Cuenta</a>
                                     <?php } ?>
-                                    <a href="<?php echo base_url(); ?>index.php/trx_pro/carrito" class="btn btn-primary btn-default"><i class="fa fa-shopping-cart"></i> Carrito (<span id="total_item" ><?php echo $this->cart->total_items();?></span>)</a>
+                                    <a href="<?php echo base_url(); ?>index.php/Trx_pro/carrito" class="btn btn-primary btn-default"><i class="fa fa-shopping-cart"></i> Carrito (<span id="total_item" ><?php echo $this->cart->total_items();?></span>)</a>
                                     <?php if (!$this->session->userdata('logueado') == true) { ?>
                                         <a href="<?php echo base_url(); ?>index.php/login" class=" btn btn-primary"><i class="fa fa-lock"></i> Registrate/Inicio sesion</a>
                                     <?php } ?>

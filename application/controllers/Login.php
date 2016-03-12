@@ -60,6 +60,65 @@ class Login extends MY_controller {
             }
         }
     }
+    
+    
+    public function inicio_sesion_carrito(){
+        $usuario = $this->input->post("email");
+        $pass = sha1(md5($this->input->post("password")));
+        
+        $cadena = '';
+
+        $this->form_validation->set_rules('email', 'email', 'trim|required|valid_email');
+        $this->form_validation->set_rules('password', 'contraseña', 'trim|required|min_length[5]|alpha_numeric');
+
+        $this->form_validation->set_message('required', 'El campo %s es obligatorio');
+        $this->form_validation->set_message('valid_email', 'El campo %s es incorrecto');
+        $this->form_validation->set_message('xss_clean', 'El campo %s contiene caracteres invalidos');
+        $this->form_validation->set_message('min_length', 'El campo %s debe tener minimo 5 caracteres');
+        $this->form_validation->set_message('alpha_numeric', 'El campo %s contiene caracteres invalidos');
+
+        if ($this->form_validation->run() == FALSE) {
+            $mensaje = validation_errors();
+            $cadena .='<div class="alert alert-warnig"><strong>¡Atención!</strong>'.$mensaje.'</div>';
+            $datos['mensajes'] = $cadena;
+            $datos['resp'] = false;
+            
+            
+        } else {
+
+            $data = $this->login_model->existe_sesion($usuario, $pass); //Para consultar si esta registrado
+
+            if ($data) {
+                $this->crear_sesion_carrito($usuario, $pass);
+                $datos['resp'] = true;
+            } else {
+                $mensaje = 'Datos incorrectos';
+                $cadena .='<div class="alert alert-warnig"><strong>¡Atención!   </strong>'.$mensaje.'</div>';
+                $datos['mensajes'] = $cadena;
+                $datos['resp'] = FALSE;
+                
+            }
+        }
+        
+        echo json_encode($datos);
+        
+    }
+    
+    public function crear_sesion_carrito($usuario, $pass) {
+        $datos = $this->login_model->traer_usuario($usuario, $pass); //cambiar
+
+        $sesion = array(
+            'logueado' => true,
+            'id_cliente' => $datos->idtab_clientes,
+            'nombre' => $datos->cli_nombre,
+            'correo' => $datos->cli_correo,
+            'password' => $datos->log_pass
+        );
+        
+        
+        $this->session->set_userdata($sesion); //Cargo los datos de sesion
+        
+    }
 
     public function crear_sesion($usuario, $pass) {
         $datos = $this->login_model->traer_usuario($usuario, $pass); //cambiar

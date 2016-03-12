@@ -30,7 +30,7 @@
                 <td><h3><p style="color: #FE980F" class="text-warning">TOTAL: </p></h3></td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td><h3><p style="color: #FE980F" class="text-warning"> <?php echo $this->cart->total(); ?></p></h3></td>
+                <td><h3><p style="color: #FE980F" class="text-warning">$ <?php echo $this->cart->total(); ?></p></h3></td>
             </tr>
         </table>
     </div>
@@ -42,7 +42,7 @@
 
         <div class="text-center" style="padding-bottom:  30px">
             <a type="button" href="<?php echo base_url(); ?>" class="btn btn-success">SEGUIR COMPRANDO</a>
-            <?php if (!empty($this->session->userdata('logueado')) && $this->cart->total_items() > 0) { ?>
+            <?php if ($this->session->userdata('logueado') == true && $this->cart->total_items() > 0) { ?>
             <button type="button" class="btn btn-primary">TERMINAR LA VENTA</button>
             <?php } else { ?>
                 <button type="button"  onclick="inicio_sesion()" class="btn btn-primary">TERMINAR LA VENTA</button>
