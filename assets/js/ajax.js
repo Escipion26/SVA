@@ -119,7 +119,7 @@ function InsertarDireccion() {
             if (!respuesta.resp) {
                 bootbox.alert(respuesta.mensaje);
             } else {
-
+                
                 bootbox.alert(respuesta.mensaje, function () {
                     window.location.reload(true);
                 });
@@ -326,6 +326,7 @@ function ConfirmaDatos() {
 function ConfirmarInsertar() {
     bootbox.confirm("¿Esta Seguro de guardar esta dirección?", function (result) {
         if (result) {
+            $('#InsertarModal').hide();
             InsertarDireccion();
             true;
         }

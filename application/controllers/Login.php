@@ -8,6 +8,12 @@ class Login extends MY_controller {
         parent::__construct();
         $this->load->model("login_model");
     }
+    
+    
+    /**
+     * Al entrar al metodo index, si no esta logueado, lo manda a login.
+     * si lo esta, lo manda al inicio 
+     */
 
     public function index() {
         if ($this->session->userdata('logueado')) {
@@ -20,6 +26,13 @@ class Login extends MY_controller {
             $this->Plantilla("login", $data);
         }
     }
+    
+    /**
+     * Metodo que recibe datos desde vista login.
+     * --Una vez que recibe los datos, los limpia y verifica que esten correctos usando form_validation.
+     *   Si los datos son correctos ejecuta metodo para la creacion de la sesion. Luego lo redirige a pagina
+     *   inicio. Si los datos no pasan la validacion, se cargan los mensajes de error y se envia a vista login
+     */
 
     public function inicio_sesion() {
 
@@ -49,6 +62,7 @@ class Login extends MY_controller {
 
             if ($data) {
                 $this->crear_sesion($usuario, $pass);
+                redirect(base_url());
             } else {
                 $mensaje = " Usuario o contraseña incorrectos.";
                 $this->session->set_flashdata('login', $mensaje);
@@ -60,6 +74,12 @@ class Login extends MY_controller {
             }
         }
     }
+    
+    
+    /**
+     * --Metodo para iniciar sesion desde modal que aparece al seleccionar "terminar la venta" en la seccion donde
+     *   se despliegan los productos que contiene el carrito de compra (boton carrito en head)
+     */
     
     
     public function inicio_sesion_carrito(){
@@ -89,7 +109,7 @@ class Login extends MY_controller {
             $data = $this->login_model->existe_sesion($usuario, $pass); //Para consultar si esta registrado
 
             if ($data) {
-                $this->crear_sesion_carrito($usuario, $pass);
+                $this->crear_sesion($usuario, $pass);
                 $datos['resp'] = true;
             } else {
                 $mensaje = 'Datos incorrectos';
@@ -104,21 +124,9 @@ class Login extends MY_controller {
         
     }
     
-    public function crear_sesion_carrito($usuario, $pass) {
-        $datos = $this->login_model->traer_usuario($usuario, $pass); //cambiar
-
-        $sesion = array(
-            'logueado' => true,
-            'id_cliente' => $datos->idtab_clientes,
-            'nombre' => $datos->cli_nombre,
-            'correo' => $datos->cli_correo,
-            'password' => $datos->log_pass
-        );
-        
-        
-        $this->session->set_userdata($sesion); //Cargo los datos de sesion
-        
-    }
+    /**
+     * --Metodod utilizado al iniciar sesion tanto desde metodo inicio_sesion, inicio_sesion_carrito y luego de registrarse
+     */
 
     public function crear_sesion($usuario, $pass) {
         $datos = $this->login_model->traer_usuario($usuario, $pass); //cambiar
@@ -133,8 +141,12 @@ class Login extends MY_controller {
         
         
         $this->session->set_userdata($sesion); //Cargo los datos de sesion
-        redirect(base_url());
+        
     }
+    
+    /**
+     * -- Metodo utilizado al presionar el boton cerrar sesion en head. Cierra sesion y elimina cache.
+     */
 
     public function cerrar_sesion() {
         //borrar datos cache
@@ -143,14 +155,25 @@ class Login extends MY_controller {
         $this->session->sess_destroy();
         redirect(base_url(), 'refresh');
     }
+    
+    /**
+     * --Funcion que remueve cache utilizada en metodo cerrar sesion
+     */
 
-    public function RemoveCache() {
+    function RemoveCache() {
         $this->db->cache_delete_all();
         $this->output->set_header('Last-Modified:' . gmdate('D, d M Y H:i:s') . 'GMT');
         $this->output->set_header('Cache-Control: no-store, no-cache, must-revalidate');
         $this->output->set_header('Cache-Control: post-check=0, pre-check=0', false);
         $this->output->set_header('Pragma: no-cache');
     }
+    
+    /**
+     * --Metodo utilizado para registrar a un nuevo cliente. Valida los datos con form_validation y metodos para chequear
+     *   que se hayan seleccionado region, provincia y comuna (ej: callback_comuna_check()). Validado los datos, inserta
+     *   nuevo cliente en la BD y crea la sesion. Luego redirige a inicio. Si hay problemas, redirige a pagina de login
+     *   mostrando los errores correspondientes 
+     */
 
     public function registro() {
 
@@ -192,14 +215,12 @@ class Login extends MY_controller {
             $data['comunas'] = $this->traer_comunas();
             $this->Plantilla("login", $data);
         } else {
-
-
-
-
+            
             $insert = $this->login_model->insert($nombre, $email, $direccion, $pass, $region, $provincia, $comuna);
 
             if ($insert) {
                 $this->crear_sesion($email, $pass);
+                redirect(base_url());
             } else {
                 $mensaje = " Hubo un error al tratar de registralo. Favor comunicarse con administrador.";
                 $this->session->set_flashdata('login', $mensaje);
@@ -211,6 +232,11 @@ class Login extends MY_controller {
             }
         }
     }
+    
+    /**
+     * --Metodo utilizado para validar que una region haya sido seleccionada.
+     */
+    
 
     function region_check($region) { //funcion para validacion del campo monto_boleta. FORM VALIDATION
         if ($region > 0) {
@@ -221,6 +247,10 @@ class Login extends MY_controller {
         }
     }
     
+    /**
+     * --Metodo utilizado para validar que una provincia haya sido seleccionada.
+     */
+    
     function provincia_check($region) { //funcion para validacion del campo monto_boleta. FORM VALIDATION
         if ($region > 0) {
             return TRUE;
@@ -230,6 +260,10 @@ class Login extends MY_controller {
         }
     }
     
+    /**
+     * --Metodo utilizado para validar que una comuna haya sido seleccionada.
+     */
+    
     function comuna_check($region) { //funcion para validacion del campo monto_boleta. FORM VALIDATION
         if ($region > 0) {
             return TRUE;
@@ -238,6 +272,10 @@ class Login extends MY_controller {
             return false;
         }
     }
+    
+    /**
+     * --Metodo para cargar select con regiones en vista login
+     */
 
     public function traer_regiones() { //carga select del modal
         $dato = $this->login_model->regiones();
@@ -253,6 +291,10 @@ class Login extends MY_controller {
 
         return $cadena;
     }
+    
+    /**
+     * --Metodo para cargar select con provincias en vista login
+     */
 
     public function traer_provincias() {
 
@@ -268,6 +310,10 @@ class Login extends MY_controller {
 
         return $cadena;
     }
+    
+     /**
+      * --Metodo para cargar select con provincias una vez seleccionada region en vista login
+      */
 
     public function llenar_provincias() {
 
@@ -284,6 +330,10 @@ class Login extends MY_controller {
 
         echo json_encode($arr);
     }
+    
+    /**
+     * --Metodo para cargar select con comunas una vez seleccionada la provincia en vista login
+     */
 
     public function llenar_comunas() {
 
@@ -300,6 +350,10 @@ class Login extends MY_controller {
 
         echo json_encode($arr);
     }
+    
+    /**
+     * --Metodo para cargar select con comunas en vista login
+     */
 
     public function traer_comunas() {
         $dato = $this->login_model->comunas();
