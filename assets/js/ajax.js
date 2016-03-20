@@ -344,3 +344,4 @@ function mostrar_login(){
     
     $('#login').show("slow");
 }
+

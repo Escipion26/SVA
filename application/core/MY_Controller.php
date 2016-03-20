@@ -19,6 +19,8 @@ class MY_controller extends CI_Controller {
         $this->load->view($view, $data);
         $this->load->view("plantilla/footer");
     }
+    
+    
 
    
 

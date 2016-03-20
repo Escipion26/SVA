@@ -56,3 +56,5 @@ $route['panel-usuario'] = "Account";
 $route['informacion-personal'] = 'Account/datos_personales';
 $route['direccion-despacho'] = 'Account/direcciones';
 $route['configuracion-cuenta'] = 'Account/configuracion';
+$route['estados-de-compras'] = 'Trx_compras';
+

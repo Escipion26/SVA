@@ -21,7 +21,7 @@ class Account extends MY_controller {
     }
     
     public function configuracion() {
-
+        
         $data['menu'] = $this->menu_cuenta();
         $this->Plantilla('configuracion', $data);
     }
@@ -31,9 +31,17 @@ class Account extends MY_controller {
 
         $cadena .= "<div class='col-lg-12' style='margin-bottom: 50px;margin-top: 20px'>";
         $cadena .= "<ul class='nav nav-tabs nav-justified'>";
-        $cadena .= "<li><a  href='" . base_url() . "index.php/informacion-personal'>Datos personales</a></li>";
+        if($this->session->userdata('datos_personales') == true){
+            $cadena .= "<li><a  href='" . base_url() . "index.php/informacion-personal'>Datos personales <span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span></a></li>";
+        }else{
+            $cadena .= "<li><a  href='" . base_url() . "index.php/informacion-personal'>Datos personales</a></li>";
+        }
         $cadena .= "<li><a  href='" . base_url() . "index.php/direccion-despacho'>Direccion despacho</a></li>";
-        $cadena .= "<li><a  href='#'>Estado pedidos</a></li>";
+        if($this->session->userdata('pendiente') == true){
+            $cadena .= "<li><a  href='" . base_url() . "index.php/estados-de-compras'>Estado de compras <span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span></a></li>";
+        }else{
+            $cadena .= "<li><a  href='" . base_url() . "index.php/estados-de-compras'>Estado de compras</a></li>";
+        }
         $cadena .= "<li><a  href='" . base_url() . "index.php/configuracion-cuenta'>Configuracion cuenta</a></li>";
         $cadena .= "</ul>";
         $cadena .="</div>";
@@ -98,6 +106,13 @@ class Account extends MY_controller {
             $apellido = ($datos->cli_apellido == null) ? ' ' : $datos->cli_apellido;
             $fono1 = ($datos->cli_fono1 == null) ? ' ' : $datos->cli_fono1;
             $fono2 = ($datos->cli_fono2 == null) ? ' ' : $datos->cli_fono2;
+            
+            //Para averiguar si debe completar datos personales
+            if($rut == ' ' || $apellido == ' '){
+                $this->session->set_userdata('datos_personales', TRUE);
+            }else{
+                $this->session->set_userdata('datos_personales', FALSE);
+            }
 
             $cadena .= "<table class='table table-bordered table-responsive'>";
             $cadena .= "<tr>";
@@ -122,6 +137,7 @@ class Account extends MY_controller {
             $cadena .= "</tr>";
             $cadena .= "</table>";
             $cadena .= "<button type='button' data-target='#DatosModal' onclick='ObtieneDatos(" . $id_cliente . ")' data-toggle='modal' class='btn btn-primary pull-right'>Modificar</button>";
+            
             $data['menu'] = $this->menu_cuenta();
             $data['datos_personales'] = $cadena;
 

@@ -7,10 +7,12 @@
             <div class='panel panel-default'>
                 <div class='panel-heading'>DATOS PERSONALES</div>
                 <div class="panel-body">
+                    <?php if($this->session->userdata('datos_personales') == true){?>
                     <div class="text-center alert alert-warning alert-dismissable pull-left col-lg-12">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
                         ¡No olvides completar tus datos!
                     </div>
+                    <?php } ?>
                 </div>
                 <div class='panel-body'>
                     <?php echo $datos_personales; ?>

@@ -43,9 +43,9 @@
         <div class="text-center" style="padding-bottom:  30px">
             <a type="button" href="<?php echo base_url(); ?>" class="btn btn-success">SEGUIR COMPRANDO</a>
             <?php if ($this->session->userdata('logueado') == true && $this->cart->total_items() > 0) { ?>
-            <button type="button" class="btn btn-primary">TERMINAR LA VENTA</button>
+            <a href="<?php echo base_url(); ?>index.php/estados-de-compras" class="btn btn-primary">TERMINAR LA VENTA</a>
             <?php } else { ?>
-                <button type="button"  onclick="inicio_sesion()" class="btn btn-primary">TERMINAR LA VENTA</button>
+                <button type="button"  onclick="inicio_sesion()" class="btn btn-primary">CONTINUAR CON LA VENTA</button>
             <?php } ?>
         </div>
     </div>
