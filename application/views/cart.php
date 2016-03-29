@@ -24,13 +24,13 @@
         </div>
     </section> <!--/#cart_items-->
     <?php if ($this->cart->total_items() > 0) { ?>
-    <div class="col-lg-3 col-lg-offset-9 col-md-2 col-md-offset-9 col-sm-2 col-sm-offset-8 col-xs-3 col-xs-offset-7">
+    <div class="col-lg-4 col-lg-offset-8 col-md-4 col-md-offset-8 col-sm-5 col-sm-offset-7 col-xs-8 col-xs-offset-4">
         <table class="responsive table">
             <tr>
                 <td><h3><p style="color: #FE980F" class="text-warning">TOTAL: </p></h3></td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td><h3><p style="color: #FE980F" class="text-warning">$ <?php echo $this->cart->total(); ?></p></h3></td>
+                <td><h3><p style="color: #FE980F" class="text-warning">$ <?php echo $total; ?></p></h3></td>
             </tr>
         </table>
     </div>

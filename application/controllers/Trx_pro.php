@@ -7,6 +7,7 @@ class Trx_pro extends MY_controller {
     public function __construct() {
         parent::__construct();
         $this->load->model("trx_model");
+        $this->load->library("recursos");
     }
 
     /**
@@ -26,7 +27,8 @@ class Trx_pro extends MY_controller {
                 'id' => $resul->prod_sku,
                 'qty' => $cantidad,
                 'price' => $resul->prod_precio_venta,
-                'name' => $resul->prod_nombre
+                'name' => $resul->prod_nombre,
+                'options' => $id_producto
             );
 
             $this->cart->insert($data);
@@ -68,7 +70,7 @@ class Trx_pro extends MY_controller {
             $cadena .= '<p>Sku: ' . $row['id'] . '</p>';
             $cadena .= '</td>';
             $cadena .= '<td class="cart_price">';
-            $cadena .= '<p>$' . $row['price'] . '</p>';
+            $cadena .= '<p>$' . $this->recursos->Formato1($row['price']) . '</p>';
             $cadena .= '</td>';
             $cadena .= '<td class="cart_quantity">';
             $cadena .= '<div class="cart_quantity_button">';
@@ -78,7 +80,7 @@ class Trx_pro extends MY_controller {
             $cadena .= '</div>';
             $cadena .= '</td>';
             $cadena .= '<td class="cart_total">';
-            $cadena .= '<p  id="total" class="cart_total_price">$' . $row['subtotal'] . '</p>';
+            $cadena .= '<p  id="total" class="cart_total_price">$' . $this->recursos->Formato1($row['subtotal']) . '</p>';
             $cadena .= '</td>';
             $cadena .= '<td>';
             $cadena .= '<button id="actualiar" onclick="return calculo(\'' . $row['rowid'] . '\');" class="btn btn-success pull-left" data-placement="top" data-toggle="tooltip" title="ACTUALIZAR CARRO" ><i class="fa fa-refresh"></i></button>';
@@ -92,6 +94,7 @@ class Trx_pro extends MY_controller {
 
 
         $data['detalle'] = $cadena;
+        $data['total'] = $this->recursos->Formato1($this->cart->total());
 
         $this->Plantilla('cart', $data);
     }

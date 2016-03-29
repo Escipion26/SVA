@@ -108,6 +108,14 @@ class Recursos{
         
     }
     
+    function FormatoFecha($fecha){
+        return date("d-m-Y", strtotime($fecha));
+    }
+    
+    function FormatoFecha1($fecha){
+        return date("Y-m-d", strtotime($fecha));
+    }
+    
     function formateo_moneda_dos($codigo, $monto){
         if($codigo == "USD"){
             return number_format($monto,2,',','.');

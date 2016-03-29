@@ -119,7 +119,7 @@ function InsertarDireccion() {
             if (!respuesta.resp) {
                 bootbox.alert(respuesta.mensaje);
             } else {
-                
+
                 bootbox.alert(respuesta.mensaje, function () {
                     window.location.reload(true);
                 });
@@ -174,7 +174,7 @@ function ActualizarDireccion() {
     });
 }
 
-function ActualizarEmail(){
+function ActualizarEmail() {
     $base = $('#base').val();
     $pass = $('#password').val();
     $email = $('#email').val();
@@ -208,7 +208,7 @@ function ActualizarEmail(){
     });
 }
 
-function ActualizarContraseña(){
+function ActualizarContraseña() {
     $base = $('#base').val();
     $pass1 = $('#pass1').val();
     $pass2 = $('#pass2').val();
@@ -244,16 +244,16 @@ function ActualizarContraseña(){
     });
 }
 
-function EliminaDireccion(IdDireccion){
+function EliminaDireccion(IdDireccion) {
     $idd = IdDireccion;
     $base = $('#base').val();
-    
+
     $.ajax({
         dataType: "json",
         data: {
             "idd": $idd
         },
-         url: "" + $base + "index.php/Account/EliminarDireccion",
+        url: "" + $base + "index.php/Account/EliminarDireccion",
         type: 'post',
         beforeSend: function () {
             //Lo que se haceestan  antes de enviar el formulario
@@ -273,12 +273,12 @@ function EliminaDireccion(IdDireccion){
         error: function (xhr, err) {
             bootbox.alert("readyState: " + xhr.readyState + "\nstatus: " + xhr.status + "\n \n responseText: " + xhr.responseText);
         }
-        
+
     });
-    
+
 }
 
-function EliminarDireccion(IdDireccion){
+function EliminarDireccion(IdDireccion) {
     bootbox.confirm("¿Esta Seguro que desea eliminar esta dirección?", function (result) {
         if (result) {
             EliminaDireccion(IdDireccion);
@@ -334,14 +334,14 @@ function ConfirmarInsertar() {
 }
 
 function ValidNum(event) {
-    
+
     if (event.keyCode < 48 || event.keyCode > 57) {
         event.returnValue = false;
     }
 }
 
-function mostrar_login(){
-    
+function mostrar_login() {
+
     $('#login').show("slow");
 }
 

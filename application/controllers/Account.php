@@ -157,7 +157,7 @@ class Account extends MY_controller {
 
             $cadena = "";
 
-            $cadena .= "<table class='table table-responsive table-bordered table-hover'>";
+            $cadena .= "<table class='table table-responsive table-bordered table-hover text-center'>";
             $cadena .= "<tr>";
             $cadena .= "<td colspan='7'><button type='button'data-target='#InsertarModal' onclick='insertdireccion()' data-toggle='modal' class='btn btn-outline btn-primary pull-left'>Agregar direccion</td>";
             $cadena .= "</tr>";
@@ -178,7 +178,7 @@ class Account extends MY_controller {
                 $cadena .= "<td>" . $row->prov_nombre . "</td>";
                 $cadena .= "<td>" . $row->com_nombre . "</td>";
                 $cadena .= "<input type='hidden' id='id_provincia' value=''>";
-                $cadena .= "<td><button type='button' data-target='#EditarModal' onclick='ObtieneDireccion(" . $row->idtab_direcciones . ")' data-toggle='modal' class='btn btn-success pull-right'>Modificar</button></td>";
+                $cadena .= "<td><button type='button' data-target='#EditarModal' onclick='ObtieneDireccion(" . $row->idtab_direcciones . ")' data-toggle='modal' class='btn btn-success'>Modificar</button></td>";
                 if ($cuenta > 1) {
                     $cadena .= "<td><button type='button' onclick='EliminarDireccion(" . $row->idtab_direcciones . ")' class='btn btn-danger pull-left' id='eliminar'>Eliminar</button></td>";
                 }

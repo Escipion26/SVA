@@ -203,7 +203,7 @@ function inicio_sesion() {
                 "<button type='button' onclick='mostrar_login()' class='btn btn-primary'>INICIAR SESION</button>" +
                 "</div>" + //col-lg-2
                 "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-2 col-xs-offset-6 col-sm-offset-4 col-md-offset-3 col-lg-offset-2'>" +
-                "<a href='" + $base + "/index.php/login'  class='btn btn-primary'>REGISTRATE</a>" +
+                "<a href='" + $base + "index.php/login'  class='btn btn-primary'>REGISTRATE</a>" +
                 "</div>" + //col-lg-2
                 "<div id='login' style='display: none;margin-top:100px;'>" +
                 "<div class='col-lg-4 col-md-5 col-sm-5 col-xs-6 col-xs-offset-3 col-sm-offset-2 col-lg-offset-1 col-md-offset-1'>" +
@@ -280,16 +280,65 @@ function ver_detalle() {
                 title: "Detalle compra",
                 message: respuesta.respuesta,
                 buttons: {
-                        cancel: {
-                            label: 'Cerrar',
-                            className: 'btn-primary'
-                        }
-               }
+                    cancel: {
+                        label: 'Cerrar',
+                        className: 'btn-primary'
+                    }
+                }
             });
             box.modal('show');
         },
         error: function (xhr, err) {
             alert("readyState: " + xhr.readyState + "\nstatus: " + xhr.status + "\n \n responseText: " + xhr.responseText);
+        }
+    });
+}
+
+function TerminarCompra(op) {
+
+    if (op == 1) {
+        bootbox.alert("Pirmero debe completar sus datos personales");
+    } else {
+        bootbox.confirm("¿Desea terminar la compra?", function (result) {
+            if (result) {
+                trx_compra();
+            }
+        });
+    }
+}
+
+function trx_compra() {
+    $base = $("#base").val();
+    $id_direccion = $("#direccion").val();
+    var now = Date.now();
+    
+ 
+    $.ajax({
+        dataType: "json",
+        data: {
+            "numero_orden": now,
+            "id_direccion": $id_direccion
+        },
+        url: "" + $base + "index.php/Trx_compras/terminar_compra",
+        type: 'post',
+        beforeSend: function () {
+            //Lo que se haceestan  antes de enviar el formulario
+            //$("#razon_social").html("Cargando...");
+        },
+        success: function (respuesta) {
+            //lo que se si el destino devuelve algo
+            if (!respuesta.resp) {
+                bootbox.alert(respuesta.mensaje);
+            } else {
+
+                bootbox.alert(respuesta.mensaje, function () {
+                    window.location.reload(true);
+                });
+            }
+            //window.location.reload(true);
+        },
+        error: function (xhr, err) {
+            bootbox.alert("readyState: " + xhr.readyState + "\nstatus: " + xhr.status + "\n \n responseText: " + xhr.responseText);
         }
     });
 }
