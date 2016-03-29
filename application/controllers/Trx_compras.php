@@ -31,7 +31,7 @@ class Trx_compras extends MY_controller {
             $cadena .= '<tr>';
             $cadena .= '<td>'.$row->cot_numero_cotizacion.'</td>';
             $cadena .= '<td>'.  $this->recursos->FormatoFecha($row->cot_fecha).'</td>';
-            $cadena .= '<td>'.$this->recursos->Formato1($row->cot_total).'</td>';
+            $cadena .= '<td>$'.$this->recursos->Formato1($row->cot_total).'</td>';
             $cadena .= '<td>'.$row->es_descripcion.'</td>';
             $cadena .= '<td><button class="btn btn-primary">Ver detalle</button></td>';
             $cadena .= '</tr>';
