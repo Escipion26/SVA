@@ -65,7 +65,7 @@ class MY_controller extends CI_Controller {
 
         if ($menu) {
             foreach ($menu as $foto) {
-                $cadena .="<div class='col-sm-4 col-xs-5'>";
+                $cadena .="<div class='col-lg-3 col-md-3 col-sm-4 col-xs-12'>";
                 $cadena .="<div class = 'product-image-wrapper'>";
                 $cadena .="<div class = 'single-products'>";
                 $cadena .="<div class = 'productinfo text-center'>";
