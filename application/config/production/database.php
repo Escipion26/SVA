@@ -75,7 +75,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '186.64.117.210',
+	'hostname' => '186.64.116.160',
 	'username' => 'program3_ecodb',
 	'password' => 'pr0gr4m4nd01d345',
 	'database' => 'program3_ecodb',
